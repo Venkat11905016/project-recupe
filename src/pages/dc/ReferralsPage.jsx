@@ -12,14 +12,15 @@ import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const referralsData = [
   {
     id: '1',
-    name: 'suresh',
+    name: 'Suresh',
     date: '29-07-2025',
     doctor: 'Pavankalyan',
-    tests: 'Dengue test, Blood test',
+    tests: 'Dengue test, Blood test,',
   },
   {
     id: '2',
@@ -52,7 +53,6 @@ export default function ReferralsPage() {
       style={styles.card}
       onPress={() => navigation.navigate('ReferralInfo', { referral: item })}
     >
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
       <View style={styles.row}>
         <Text style={styles.name}>{item.name}</Text>
         <View style={styles.dateContainer}>
@@ -64,15 +64,21 @@ export default function ReferralsPage() {
           />
         </View>
       </View>
-      <Text style={styles.doctor}>{item.doctor}</Text>
-      <Text style={styles.tests} numberOfLines={1}>
-        {item.tests}
-      </Text>
+      <View style={styles.newRow}>
+        <Text style={styles.doctor}>{item.doctor}</Text>
+        {/* <Text style={styles.tests} numberOfLines={1}>
+          {item.tests}
+        </Text> */}
+        <Text style={styles.tests} numberOfLines={1} ellipsizeMode="tail">
+          {item.tests}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <FontAwesome6 name="arrow-left" size={30} color="#fff" />
@@ -82,7 +88,15 @@ export default function ReferralsPage() {
         </TouchableOpacity>
       </View>
       <Text style={styles.header}>Referrals</Text>
-      <TextInput placeholder="Search" style={styles.searchInput} />
+      {/* <TextInput
+        placeholder="Search"
+        placeholderTextColor="black"
+        style={styles.searchInput}
+      /> */}
+      <View style={styles.searchContainer}>
+        <TextInput placeholder="Search" style={styles.searchInput} />
+        <Icon name="search" size={24} color="black" style={styles.searchIcon} />
+      </View>
       <FlatList
         data={referralsData}
         keyExtractor={item => item.id}
@@ -97,11 +111,21 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   header: {
     backgroundColor: '#0097A7',
-    padding: 20,
+    fontSize: 23,
+    paddingTop: 10,
+    paddingBottom: 20,
     color: '#fff',
-    fontSize: 20,
     textAlign: 'center',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#0097A7',
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   dateContainer: {
     flexDirection: 'row',
@@ -109,51 +133,73 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // or 'flex-start' based on spacing preference
   },
 
-  headerContainer: {
+  searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#0097A7',
-    padding: 20,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    borderRadius: 30,
+    height: 60,
+    margin: 18,
+    paddingHorizontal: 10,
+    paddingLeft: 20,
   },
   searchInput: {
-    margin: 15,
-    padding: 10,
-    borderRadius: 30,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    paddingLeft: 20,
+    flex: 1,
+    fontSize: 18,
     fontFamily: 'Poppins-Regular',
+    color: 'black',
   },
+
+  searchIcon: {
+    marginLeft: 10,
+  },
+  // searchInput: {
+  //   margin: 15,
+  //   padding: 10,
+  //   height: 60,
+  //   borderColor: '#ccc',
+  //   paddingLeft: 20,
+  // },
   list: { paddingHorizontal: 15 },
   card: {
-    borderWidth: 1,
-    borderColor: '#eee',
-    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: '#dfdfdfff',
+    borderRadius: 4,
     padding: 15,
-    marginBottom: 10,
+    marginBottom: 15,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  newRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 12,
+  },
   name: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: 'Poppins-SemiBold',
   },
   date: {
-    fontSize: 14,
-    color: '#666',
-    fontFamily: 'Poppins-Medium',
+    fontSize: 18,
+    color: 'black',
+    fontFamily: 'Poppins-Regular',
   },
   doctor: {
-    color: '#888',
+    color: 'grey',
     marginTop: 5,
+    fontSize: 17,
+    // maxWidth: 200,
     fontFamily: 'Poppins-Regular',
   },
   tests: {
-    color: '#444',
+    color: 'grey',
     marginTop: 2,
+    fontSize: 17,
+    // maxWidth: 200,
     fontFamily: 'Poppins-Regular',
   },
 });

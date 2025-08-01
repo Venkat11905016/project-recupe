@@ -17,8 +17,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CustomAlert from '../../components/CustomAlert';
 
-
-
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -191,7 +189,7 @@ export default function LoginScreen({ navigation }) {
                   <TextInput
                     style={styles.passwordInput}
                     placeholder="Email"
-                    placeholderTextColor="#999"
+                    placeholderTextColor="black"
                     value={username}
                     onChangeText={text => {
                       const disallowedPattern =
@@ -207,7 +205,7 @@ export default function LoginScreen({ navigation }) {
                   <TextInput
                     style={styles.passwordInput}
                     placeholder="Password"
-                    placeholderTextColor="#999"
+                    placeholderTextColor="black"
                     value={password}
                     secureTextEntry={!showPassword}
                     onChangeText={text => {
@@ -223,7 +221,7 @@ export default function LoginScreen({ navigation }) {
                     onPress={() => setShowPassword(!showPassword)}
                   >
                     <FontAwesome
-                      name={showPassword ? 'eye-slash' : 'eye'}
+                      name={showPassword ? 'eye' : 'eye-slash'}
                       size={24}
                       color="black"
                     />
@@ -247,7 +245,7 @@ export default function LoginScreen({ navigation }) {
                 </TouchableOpacity>
 
                 <Text style={styles.newUser}>
-                  New user?
+                  New user?{' '}
                   <Text
                     style={styles.signup}
                     onPress={() => navigation.navigate('Signup')}
@@ -345,43 +343,43 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   forgot: {
-    color: '#333',
+    color: 'black',
     alignSelf: 'flex-end',
-    fontSize: 16,
+    fontSize: 19,
     marginBottom: 15,
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-Regular',
   },
   loginBtn: {
     backgroundColor: '#0097A7',
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderRadius: 10,
     width: '100%',
     alignItems: 'center',
   },
   loginBtnText: {
     color: '#fff',
-    fontSize: 18,
-    fontFamily: 'Poppins-Bold',
+    fontSize: 20,
+    fontFamily: 'Poppins-Regular',
   },
   newUser: {
     marginTop: 24,
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: 'Poppins-Regular',
   },
   signup: {
     color: '#0097A7',
-    fontSize: 16,
-    fontFamily: 'Poppins-Bold',
+    fontSize: 20,
+    fontFamily: 'Poppins-SemiBold',
   },
   powered: {
     // marginTop: 130,
-    marginTop: 120,
+    marginTop: 135,
     fontSize: 18,
     fontFamily: 'Poppins-Regular',
   },
   recupe: {
     fontSize: 22,
     color: '#0097A7',
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Poppins-Regular',
   },
 });

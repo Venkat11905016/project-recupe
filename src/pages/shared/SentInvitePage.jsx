@@ -56,27 +56,20 @@ const SentInvitePage = () => {
       >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Text style={styles.label}>Name *</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Name"
-            value={name}
-            onChangeText={setName}
-          />
+          <TextInput style={styles.input} value={name} onChangeText={setName} />
 
           <Text style={styles.label}>Mobile Number *</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter Mobile Number"
             value={mobileNumber}
             onChangeText={setMobileNumber}
             keyboardType="phone-pad"
             maxLength={10}
           />
-
-          <TouchableOpacity style={styles.button} onPress={handleInvite}>
-            <Text style={styles.buttonText}>SEND INVITE</Text>
-          </TouchableOpacity>
         </ScrollView>
+        <TouchableOpacity style={styles.button} onPress={handleInvite}>
+          <Text style={styles.buttonText}>SEND INVITE</Text>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
     </View>
   );
@@ -90,17 +83,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#0097A7',
-    padding: 20,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   titleWrapper: {
     backgroundColor: '#0097A7',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingTop: 10,
+    paddingBottom: 20,
     marginBottom: 10,
   },
   title: {
-    fontSize: 20,
-    fontFamily: 'Poppins-Bold',
+    fontSize: 23,
+    fontFamily: 'Poppins-Regular',
     color: '#fff',
     textAlign: 'center',
   },
@@ -109,13 +104,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   label: {
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
     marginTop: 20,
     marginBottom: 5,
-    fontSize: 16,
+    fontSize: 20,
   },
   input: {
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ddd',
     borderRadius: 8,
     padding: 12,
@@ -123,15 +118,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   button: {
-    marginTop: 40,
-    backgroundColor: '#009999',
-    paddingVertical: 14,
+    // marginTop: 40,
+    margin: 10,
+    backgroundColor: '#0097A7',
+    paddingVertical: 10,
     borderRadius: 8,
     alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    fontSize: 18,
   },
 });

@@ -11,7 +11,6 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -19,13 +18,17 @@ import Entypo from 'react-native-vector-icons/Entypo';
 const AssignAssociationPage = () => {
   const [selectedDoctor, setSelectedDoctor] = useState('');
   const [recupID, setRecupID] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
   const navigation = useNavigation();
 
   const doctorList = [
-    { label: 'Select Doctor', value: '' },
-    { label: 'Dr. Harsha', value: 'harsha' },
-    { label: 'Dr. Meena', value: 'meena' },
-    { label: 'Dr. Anil', value: 'anil' },
+    { label: 'Raven', value: 'raven' },
+    { label: 'John', value: 'john' },
+    { label: 'Goutham', value: 'goutham' },
+    { label: 'venkat', value: 'venkat' },
+    { label: 'Mukund', value: 'mukund' },
   ];
 
   const handleSubmit = () => {
@@ -39,6 +42,7 @@ const AssignAssociationPage = () => {
 
     Alert.alert('Success', 'Association Submitted');
     setSelectedDoctor('');
+    setSearchQuery('');
     setRecupID('');
   };
 
@@ -70,39 +74,89 @@ const AssignAssociationPage = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView contentContainerStyle={styles.container}>
+          {/* Doctor Dropdown */}
           <Text style={styles.label}>Doctor *</Text>
-          <View style={styles.pickerWrapper}>
-            <Picker
-              selectedValue={selectedDoctor}
-              onValueChange={itemValue => setSelectedDoctor(itemValue)}
-              style={styles.pickerText}
-            >
-              {doctorList.map(doctor => (
-                <Picker.Item
-                  key={doctor.value}
-                  label={doctor.label}
-                  value={doctor.value}
+          <View style={styles.dropdownSearchWrapper}>
+            <View style={styles.searchInputWrapper}>
+              <FontAwesome6
+                name="magnifying-glass"
+                size={16}
+                color="#999"
+                style={{ opacity: isDropdownVisible ? 1 : 0, marginRight: 6 }}
+              />
+              <TextInput
+                placeholder={isDropdownVisible ? 'Search' : 'Select Doctor'}
+                placeholderTextColor="black"
+                value={searchQuery}
+                onChangeText={text => {
+                  setSearchQuery(text);
+                  setIsDropdownVisible(true);
+                }}
+                style={styles.searchInput}
+              />
+
+              <TouchableOpacity
+                onPress={() => {
+                  if (isDropdownVisible) {
+                    setIsDropdownVisible(false);
+                    setSearchQuery('');
+                  } else {
+                    setIsDropdownVisible(true);
+                  }
+                }}
+              >
+                <FontAwesome6
+                  name={isDropdownVisible ? 'xmark' : 'chevron-down'}
+                  size={15}
+                  color="#999"
                 />
-              ))}
-            </Picker>
+              </TouchableOpacity>
+            </View>
+
+            {isDropdownVisible && (
+              <View style={styles.dropdownList}>
+                {doctorList
+                  .filter(item =>
+                    item.label
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase()),
+                  )
+                  .map(item => (
+                    <TouchableOpacity
+                      key={item.value}
+                      style={styles.dropdownItem}
+                      onPress={() => {
+                        setSelectedDoctor(item.value);
+                        setSearchQuery(item.label);
+                        setIsDropdownVisible(false);
+                      }}
+                    >
+                      <Text style={styles.dropdownText}>{item.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+              </View>
+            )}
           </View>
 
+          {/* OR Section */}
           <Text style={styles.orText}>OR</Text>
 
-          <Text style={styles.label}>Recupé ID *</Text>
+          {/* Recupe ID Input */}
+          <Text style={styles.label}>Recupe ID *</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter Recupé ID"
+            placeholder="Enter Recupe ID"
             value={recupID}
             onChangeText={setRecupID}
             placeholderTextColor="#aaa"
           />
-
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>SUBMIT</Text>
-          </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* Submit Button */}
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>SUBMIT</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -119,8 +173,8 @@ const styles = StyleSheet.create({
   },
   titleWrapper: {
     backgroundColor: '#0097A7',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingTop: 10,
+    paddingBottom: 20,
     marginBottom: 10,
   },
   headerLeft: {
@@ -134,48 +188,76 @@ const styles = StyleSheet.create({
     top: 14,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 23,
     textAlign: 'center',
     color: '#fff',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
   },
   container: {
     padding: 20,
     flexGrow: 1,
-    justifyContent: 'center',
   },
   label: {
     marginTop: 20,
     marginBottom: 5,
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: 'Poppins-SemiBold',
   },
   input: {
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ddd',
     borderRadius: 8,
-    padding: 12,
+    // padding: 12,
+    paddingHorizontal: 15,
     fontSize: 16,
     fontFamily: 'Poppins-Regular',
   },
-  pickerWrapper: {
-    borderWidth: 1,
+  dropdownSearchWrapper: {
+    marginBottom: 10,
+  },
+  searchInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 3,
     borderColor: '#ddd',
     borderRadius: 8,
-    overflow: 'hidden',
+    paddingHorizontal: 10,
+    paddingRight: 20,
+    paddingVertical: 4,
   },
-  pickerText: {
+  searchIcon: {
+    marginRight: 6,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    color: '#000',
+  },
+  dropdownList: {
+    borderWidth: 3,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: 8,
+    marginTop: 5,
+    padding: 10,
+  },
+  dropdownItem: {
+    paddingVertical: 8,
+  },
+  dropdownText: {
+    fontSize: 16,
     fontFamily: 'Poppins-Regular',
   },
   orText: {
     textAlign: 'center',
-    marginVertical: 15,
-    fontSize: 16,
+    // marginVertical: 10,
+    marginTop: 15,
+    fontSize: 20,
     fontFamily: 'Poppins-SemiBold',
   },
   button: {
-    marginTop: 30,
-    backgroundColor: '#009999',
+    margin: 10,
+    backgroundColor: '#0097A7',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',

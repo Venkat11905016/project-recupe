@@ -22,7 +22,7 @@ const ReferralInfoPage = () => {
   const status = 'Partially Completed';
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1 }}>
       {/* Header - OUTSIDE ScrollView */}
       <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
       <View style={styles.iconHeader}>
@@ -56,22 +56,21 @@ const ReferralInfoPage = () => {
 
         <Text style={styles.label}>Status</Text>
         <TextInput value={status} style={styles.input} editable={false} />
-
-        <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backText}>BACK</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.uploadButton}
-            onPress={() => navigation.navigate('ReportInfo')}
-          >
-            <Text style={styles.uploadText}>UPLOAD REPORTS</Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
+      <View style={styles.buttonRow}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.backText}>BACK</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.uploadButton}
+          onPress={() => navigation.navigate('ReportInfo')}
+        >
+          <Text style={styles.uploadText}>UPLOAD REPORTS</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -81,13 +80,12 @@ export default ReferralInfoPage;
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#fff',
     flexGrow: 1,
   },
   header: {
     backgroundColor: '#0097A7',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
+    paddingTop: 10,
+    paddingBottom: 20,
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -95,57 +93,57 @@ const styles = StyleSheet.create({
     backgroundColor: '#0097A7',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 23,
     color: '#fff',
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Poppins-Regular',
     textAlign: 'center',
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
     marginTop: 12,
     marginBottom: 6,
     fontFamily: 'Poppins-SemiBold',
   },
   input: {
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ddd',
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: '#f9f9f9',
     fontFamily: 'Poppins-Regular',
   },
   testContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ddd',
     borderRadius: 8,
     padding: 10,
-    backgroundColor: '#f9f9f9',
   },
   testChip: {
     backgroundColor: '#0097A7',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingVertical: 4,
+    paddingHorizontal: 20,
     borderRadius: 20,
     margin: 4,
   },
   testText: {
-    color: '#fff',
+    color: 'white',
     fontFamily: 'Poppins-Medium',
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 30,
+    margin: 15,
   },
   backButton: {
-    borderWidth: 1.5,
+    borderWidth: 2,
     borderColor: '#0097A7',
     borderRadius: 8,
     paddingVertical: 12,
@@ -163,12 +161,14 @@ const styles = StyleSheet.create({
   },
   backText: {
     textAlign: 'center',
+    fontSize: 15,
     color: '#0097A7',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   uploadText: {
     textAlign: 'center',
     color: '#fff',
-    fontFamily: 'Poppins-Bold',
+    fontSize: 15,
+    fontFamily: 'Poppins-SemiBold',
   },
 });

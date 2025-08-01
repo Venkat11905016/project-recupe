@@ -15,9 +15,12 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import moment from 'moment';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const AnalyticsPage = () => {
   const navigation = useNavigation();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -26,11 +29,15 @@ const AnalyticsPage = () => {
 
   const [openDropdown, setOpenDropdown] = useState(false);
   const [selectedType, setSelectedType] = useState(null);
-  const [items, setItems] = useState([
+  // const [items, setItems] = useState([
+  //   { label: 'By Test', value: 'test' },
+  //   { label: 'By Patient', value: 'patient' },
+  // ]);
+
+  const doctorList = [
     { label: 'By Test', value: 'test' },
     { label: 'By Patient', value: 'patient' },
-  ]);
-
+  ];
   const onSubmit = () => {
     console.log({
       type: selectedType,
@@ -63,18 +70,54 @@ const AnalyticsPage = () => {
       <View style={styles.container}>
         {/* Dropdown */}
         <Text style={styles.label}>Select Type</Text>
-        <DropDownPicker
-          open={openDropdown}
-          value={selectedType}
-          items={items}
-          setOpen={setOpenDropdown}
-          setValue={setSelectedType}
-          setItems={setItems}
-          placeholder="Select an option"
-          style={styles.dropdown}
-          dropDownContainerStyle={{ borderColor: '#ccc' }}
-          textStyle={{ fontFamily: 'Poppins-Regular' }}
-        />
+        <View style={styles.dropdownSearchWrapper}>
+          <View style={styles.searchInputWrapper}>
+            <TextInput
+              placeholderTextColor="black"
+              value={searchQuery}
+              onChangeText={text => {
+                setSearchQuery(text);
+                setIsDropdownVisible(true);
+              }}
+              style={styles.searchInput}
+            />
+
+            <TouchableOpacity
+              onPress={() => {
+                if (isDropdownVisible) {
+                  setIsDropdownVisible(false);
+                  setSearchQuery('');
+                } else {
+                  setIsDropdownVisible(true);
+                }
+              }}
+            >
+              <FontAwesome6 name="chevron-down" size={15} color="#999" />
+            </TouchableOpacity>
+          </View>
+
+          {isDropdownVisible && (
+            <View style={styles.dropdownList}>
+              {doctorList
+                .filter(item =>
+                  item.label.toLowerCase().includes(searchQuery.toLowerCase()),
+                )
+                .map(item => (
+                  <TouchableOpacity
+                    key={item.value}
+                    style={styles.dropdownItem}
+                    onPress={() => {
+                      setSelectedDoctor(item.value);
+                      setSearchQuery(item.label);
+                      setIsDropdownVisible(false);
+                    }}
+                  >
+                    <Text style={styles.dropdownText}>{item.label}</Text>
+                  </TouchableOpacity>
+                ))}
+            </View>
+          )}
+        </View>
 
         {/* Start Date */}
         <Text style={styles.label}>Start Date</Text>
@@ -85,7 +128,7 @@ const AnalyticsPage = () => {
           <Text style={styles.dateText}>
             {startDate ? moment(startDate).format('DD-MM-YYYY') : 'DD-MM-YYYY'}
           </Text>
-          <MaterialCommunityIcons name="calendar" size={20} color="#666" />
+          <Icon name="calendar" size={20} color="#666" />
         </TouchableOpacity>
 
         {showStartPicker && (
@@ -109,7 +152,7 @@ const AnalyticsPage = () => {
           <Text style={styles.dateText}>
             {endDate ? moment(endDate).format('DD-MM-YYYY') : 'DD-MM-YYYY'}
           </Text>
-          <MaterialCommunityIcons name="calendar" size={20} color="#666" />
+          <Icon name="calendar" size={20} color="#666" />
         </TouchableOpacity>
 
         {showEndPicker && (
@@ -139,29 +182,63 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
   },
   header: {
     backgroundColor: '#0097A7',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
+    paddingTop: 10,
+    paddingBottom: 20,
     marginBottom: 20,
+  },
+  dropdownSearchWrapper: {
+    marginBottom: 10,
+  },
+  searchInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 3,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingRight: 20,
+    paddingVertical: 4,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    color: '#000',
+  },
+  dropdownList: {
+    borderWidth: 2,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    marginTop: 5,
+    padding: 10,
+  },
+  dropdownItem: {
+    paddingVertical: 8,
+  },
+  dropdownText: {
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#0097A7',
-    padding: 20,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 23,
     color: '#fff',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
     textAlign: 'center',
   },
   label: {
-    fontSize: 16,
+    fontSize: 19,
     marginTop: 12,
     marginBottom: 6,
     fontFamily: 'Poppins-SemiBold',
@@ -172,16 +249,15 @@ const styles = StyleSheet.create({
   },
   dateInput: {
     flexDirection: 'row',
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ddd',
     borderRadius: 8,
     padding: 12,
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#f9f9f9',
   },
   dateText: {
-    fontSize: 16,
+    fontSize: 19,
     color: '#333',
     fontFamily: 'Poppins-Regular',
   },

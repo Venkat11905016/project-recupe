@@ -9,11 +9,10 @@ import {
   ScrollView,
   StatusBar,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { useNavigation } from '@react-navigation/native';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const ResetPasswordPage = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -66,10 +65,9 @@ const ResetPasswordPage = () => {
             value={oldPassword}
             onChangeText={setOldPassword}
             secureTextEntry={!showOld}
-            placeholder="Enter Old Password"
           />
           <TouchableOpacity onPress={() => setShowOld(!showOld)}>
-            <Icon name={showOld ? 'eye-off' : 'eye'} size={24} />
+            <Icon name={showOld ? 'eye-slash' : 'eye'} size={24} />
           </TouchableOpacity>
         </View>
 
@@ -80,10 +78,9 @@ const ResetPasswordPage = () => {
             value={newPassword}
             onChangeText={setNewPassword}
             secureTextEntry={!showNew}
-            placeholder="Enter New Password"
           />
           <TouchableOpacity onPress={() => setShowNew(!showNew)}>
-            <Icon name={showNew ? 'eye-off' : 'eye'} size={24} />
+            <Icon name={showNew ? 'eye-slash' : 'eye'} size={24} />
           </TouchableOpacity>
         </View>
 
@@ -94,10 +91,9 @@ const ResetPasswordPage = () => {
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry={!showConfirm}
-            placeholder="Confirm Password"
           />
           <TouchableOpacity onPress={() => setShowConfirm(!showConfirm)}>
-            <Icon name={showConfirm ? 'eye-off' : 'eye'} size={24} />
+            <Icon name={showConfirm ? 'eye-slash' : 'eye'} size={24} />
           </TouchableOpacity>
         </View>
 
@@ -120,14 +116,15 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     backgroundColor: '#0097A7',
-    paddingVertical: 14,
+    paddingTop: 10,
+    paddingBottom: 20,
     alignItems: 'center',
     marginBottom: 12,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 23,
     color: '#fff',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
   },
   container: {
     padding: 20,
@@ -136,14 +133,14 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 20,
     marginBottom: 5,
-    fontSize: 16,
-    fontFamily: 'Poppins-Bold',
+    fontSize: 18,
+    fontFamily: 'Poppins-SemiBold',
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: '#ddd',
-    borderWidth: 1,
+    borderWidth: 3,
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -156,7 +153,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 40,
-    backgroundColor: '#009999',
+    backgroundColor: '#0097A7',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',

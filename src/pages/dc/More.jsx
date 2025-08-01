@@ -35,10 +35,8 @@ const MorePage = () => {
           <Entypo name="home" size={30} color="#fff" />
         </TouchableOpacity>
       </View>
-
+      <Text style={styles.header}>More</Text>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.header}>More</Text>
-
         {items.map(item => (
           <TouchableOpacity
             key={item.label}
@@ -73,29 +71,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#0097A7',
-    padding: 20,
+    // padding: 20,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   header: {
-    fontSize: 22,
+    fontSize: 23,
     textAlign: 'center',
-    marginVertical: 20,
-    color: '#0097A7',
-    fontFamily: 'Poppins-Bold',
+    backgroundColor: '#0097A7',
+    color: 'white',
+    fontFamily: 'Poppins-Regular',
+    paddingTop: 10,
+    paddingBottom: 20,
   },
   button: {
-    backgroundColor: '#f6f6f6',
     borderRadius: 10,
-    padding: 15,
-    marginBottom: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginBottom: 15,
+    marginTop: 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderWidth: 0.5,
+    borderWidth: 3,
     borderColor: '#ddd',
   },
   label: {
-    fontSize: 16,
-    color: '#222',
+    fontSize: 20,
     fontFamily: 'Poppins-Medium',
   },
 });

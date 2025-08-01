@@ -21,19 +21,19 @@ const ReportInfoPage = () => {
   const mobileNumber = '6886828683';
 
   const reports = [
-    { id: 1, testName: 'Dengue test', fileName: 'aditya-kumar-hal...' },
-    { id: 2, testName: 'Dengue test', fileName: 'screencapture-127...' },
-    { id: 3, testName: 'Sugar test', fileName: 'screencapture-127...' },
+    { id: 1, testName: 'CBP', fileName: 'aditya-kumar-hal' },
+    { id: 2, testName: 'MRI', fileName: 'screencapture-127' },
+    { id: 3, testName: 'CBP', fileName: 'screencapture-127' },
   ];
 
   const renderItem = ({ item }) => (
     <View style={styles.row}>
-      <Text style={styles.cell}>{item.id}</Text>
-      <Text style={styles.cell}>{item.testName}</Text>
-      <Text style={styles.cell} numberOfLines={1}>
+      <Text style={[styles.cell, { flex: 2 }]}>{item.id}</Text>
+      <Text style={[styles.cell, { flex: 4 }]}>{item.testName}</Text>
+      <Text style={[styles.cell, { flex: 10 }]} numberOfLines={1}>
         {item.fileName}
       </Text>
-      <TouchableOpacity style={styles.iconButton}>
+      <TouchableOpacity style={[styles.iconButton, { flex: 2 }]}>
         <MaterialCommunityIcons name="eye" size={20} color="#fff" />
       </TouchableOpacity>
     </View>
@@ -69,10 +69,10 @@ const ReportInfoPage = () => {
 
         {/* Table Header */}
         <View style={styles.tableHeader}>
-          <Text style={[styles.tableHeaderText, { flex: 0.5 }]}>#</Text>
-          <Text style={[styles.tableHeaderText, { flex: 1.2 }]}>Test Name</Text>
-          <Text style={[styles.tableHeaderText, { flex: 2 }]}>File Name</Text>
-          <Text style={[styles.tableHeaderText, { flex: 1 }]}>Action</Text>
+          <Text style={[styles.tableHeaderText, { flex: 1 }]}>#</Text>
+          <Text style={[styles.tableHeaderText, { flex: 3 }]}>Test Name</Text>
+          <Text style={[styles.tableHeaderText, { flex: 9 }]}>File Name</Text>
+          <Text style={[styles.tableHeaderText, { flex: 5 }]}>Action</Text>
         </View>
 
         {/* Report List */}
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
   },
   header: {
     backgroundColor: '#0097A7',
@@ -101,35 +100,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 23,
     color: '#fff',
     textAlign: 'center',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
   },
   iconHeader: {
     backgroundColor: '#0097A7',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
     marginTop: 12,
     marginBottom: 6,
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Poppins-Regular',
   },
   input: {
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ddd',
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: '#f9f9f9',
     fontFamily: 'Poppins-Regular',
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#333',
+    backgroundColor: 'black',
     paddingVertical: 10,
     paddingHorizontal: 8,
     borderTopLeftRadius: 8,
@@ -139,27 +139,29 @@ const styles = StyleSheet.create({
   tableHeaderText: {
     color: '#fff',
     fontFamily: 'Poppins-Bold',
+    textAlign: 'center',
   },
   row: {
     flexDirection: 'row',
     paddingVertical: 10,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderColor: '#eee',
+    borderColor: 'grey',
     alignItems: 'center',
   },
   cell: {
     flex: 1,
-    fontSize: 14,
-    color: '#333',
+    fontSize: 16,
+    color: 'black',
+    paddingHorizontal: 3,
     fontFamily: 'Poppins-Regular',
   },
   iconButton: {
     backgroundColor: '#0097A7',
     borderRadius: 5,
-    padding: 6,
+    padding: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 0.8,
+    flex: 0.5,
   },
 });

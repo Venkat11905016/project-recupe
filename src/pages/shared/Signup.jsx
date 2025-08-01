@@ -208,7 +208,7 @@ export default function Signup({ navigation }) {
                   }
                 />
 
-                <TextInput
+                {/* <TextInput
                   style={styles.input}
                   placeholder="+91  Mobile"
                   placeholderTextColor="#000"
@@ -221,8 +221,24 @@ export default function Signup({ navigation }) {
                       mobile: input,
                     })
                   }
-                />
-
+                /> */}
+                <View style={styles.mobileInputContainer}>
+                  <Text style={styles.countryCode}>+91</Text>
+                  <TextInput
+                    style={styles.mobileInput}
+                    placeholder="Mobile"
+                    placeholderTextColor="#000"
+                    keyboardType="numeric"
+                    value={content.mobile}
+                    maxLength={10}
+                    onChangeText={input =>
+                      setContent({
+                        ...content,
+                        mobile: input,
+                      })
+                    }
+                  />
+                </View>
                 <TouchableOpacity
                   style={styles.signupBtn}
                   onPress={() => {
@@ -234,7 +250,7 @@ export default function Signup({ navigation }) {
                 </TouchableOpacity>
 
                 <Text style={styles.loginText}>
-                  Already a user?
+                  Already a user?{' '}
                   <Text
                     style={styles.loginLink}
                     onPress={() => navigation.navigate('Login')}
@@ -281,9 +297,9 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
   title: {
-    fontSize: 28,
+    fontSize: 35,
     color: '#fff',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Medium',
   },
   card: {
     width: '100%',
@@ -292,11 +308,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signupText: {
-    fontSize: 22,
+    fontSize: 28,
     alignSelf: 'flex-start',
     marginTop: 40,
     marginBottom: 10,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   input: {
     width: '100%',
@@ -326,12 +342,13 @@ const styles = StyleSheet.create({
   },
   loginText: {
     marginTop: 20,
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: 'Poppins-Regular',
   },
   loginLink: {
+    fontSize: 20,
     color: '#0097A7',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   powered: {
     marginTop: 30,
@@ -341,5 +358,31 @@ const styles = StyleSheet.create({
   recupe: {
     color: '#0097A7',
     fontFamily: 'Poppins-Bold',
+  },
+  mobileInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    height: 55,
+    borderColor: '#ddd',
+    borderWidth: 3,
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+
+  countryCode: {
+    fontSize: 18,
+    marginRight: 8,
+    fontFamily: 'Poppins-Regular',
+    color: 'black',
+  },
+
+  mobileInput: {
+    flex: 1,
+    fontSize: 18,
+    fontFamily: 'Poppins-Regular',
+    color: 'black',
   },
 });

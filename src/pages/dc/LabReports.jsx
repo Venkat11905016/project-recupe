@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   StatusBar,
+  TextInput,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { useNavigation } from '@react-navigation/native';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 const reportsData = [
   {
     id: '1',
@@ -43,7 +45,24 @@ const LabReportsPage = () => {
       style={styles.card}
       onPress={() => navigation.navigate('ReportInfo', { report: item })}
     >
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <View style={styles.row}>
+        <Text style={styles.name}>{item.name}</Text>
+        <View style={styles.dateContainer}>
+          <Text style={styles.date}>{item.date}</Text>
+          <MaterialCommunityIcons
+            name="chevron-right"
+            size={30}
+            color="#0097A7"
+          />
+        </View>
+      </View>
+      <View style={styles.newRow}>
+        <Text style={styles.doctor}>{item.referredBy}</Text>
+        <Text style={styles.tests} numberOfLines={1}>
+          {item.tests}
+        </Text>
+      </View>
+      {/* 
       <View>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.text}>{item.referredBy}</Text>
@@ -51,12 +70,13 @@ const LabReportsPage = () => {
           {item.tests}
         </Text>
       </View>
-      <Text style={styles.date}>{item.date}</Text>
+      <Text style={styles.date}>{item.date}</Text> */}
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <FontAwesome6 name="arrow-left" size={30} color="#fff" />
@@ -66,6 +86,10 @@ const LabReportsPage = () => {
         </TouchableOpacity>
       </View>
       <Text style={styles.header}>Reports</Text>
+      <View style={styles.searchContainer}>
+        <TextInput placeholder="Search" style={styles.searchInput} />
+        <Icon name="search" size={24} color="black" style={styles.searchIcon} />
+      </View>
       <FlatList
         data={reportsData}
         keyExtractor={item => item.id}
@@ -85,11 +109,12 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#0097A7',
-    padding: 20,
+    fontSize: 23,
+    paddingTop: 10,
+    paddingBottom: 20,
     color: '#fff',
-    fontSize: 20,
     textAlign: 'center',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
   },
   card: {
     flexDirection: 'row',
@@ -104,7 +129,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#0097A7',
-    padding: 20,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   name: {
     fontSize: 16,
@@ -114,10 +141,76 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Poppins-Regular',
   },
+  // date: {
+  //   alignSelf: 'center',
+  //   color: '#555',
+  //   fontSize: 13,
+  //   fontFamily: 'Poppins-Medium',
+  // },
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', // or 'flex-start' based on spacing preference
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  newRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 12,
+  },
+  name: {
+    fontSize: 20,
+    fontFamily: 'Poppins-Bold',
+  },
   date: {
-    alignSelf: 'center',
-    color: '#555',
-    fontSize: 13,
+    fontSize: 18,
+    color: '#666',
     fontFamily: 'Poppins-Medium',
+  },
+  doctor: {
+    color: '#888',
+    marginTop: 5,
+    fontFamily: 'Poppins-Regular',
+  },
+  doctor: {
+    color: '#888',
+    marginTop: 5,
+    fontFamily: 'Poppins-Regular',
+  },
+  tests: {
+    color: '#444',
+    marginTop: 2,
+    fontFamily: 'Poppins-Regular',
+  },
+  card: {
+    borderWidth: 3,
+    borderColor: '#eee',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#ccc',
+    borderRadius: 30,
+    height: 60,
+    margin: 18,
+    paddingHorizontal: 10,
+    paddingLeft: 20,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 18,
+    fontFamily: 'Poppins-Regular',
+    color: 'black',
+  },
+
+  searchIcon: {
+    marginLeft: 10,
   },
 });

@@ -55,7 +55,7 @@ const ProfilePage = () => {
               style={styles.profileImage}
               resizeMode="contain"
             />
-            <View style={{ flex: 1, marginLeft: 10 }}>
+            <View style={{ flex: 1, marginLeft: 20 }}>
               <Text style={styles.name}>{user.name}</Text>
               <Text style={styles.subText}>{user.centerName}</Text>
               <Text style={styles.subText}>{user.email}</Text>
@@ -70,7 +70,7 @@ const ProfilePage = () => {
           </View>
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, styles.cardTwo]}>
           <Text style={styles.sectionTitle}>Personal Info</Text>
           <InfoItem label="Recupe ID" value={user.recupeId} />
           <InfoItem label="Center Name" value={user.centerName} />
@@ -81,7 +81,7 @@ const ProfilePage = () => {
           <InfoItem label="Validity End Date" value={user.validityEndDate} />
         </View>
 
-        <View style={styles.card}>
+        <View style={[styles.card, styles.cardTwo]}>
           <Text style={styles.sectionTitle}>Additional Info</Text>
           <InfoItem label="State" value={user.state} />
           <InfoItem label="City" value={user.city} />
@@ -115,30 +115,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#0097A7',
-    padding: 20,
+    // padding: 20,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   header: {
     backgroundColor: '#0097A7',
-    paddingBottom: 10,
+    paddingBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 23,
     color: '#fff',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
   },
   card: {
-    backgroundColor: '#f8f8f8',
     padding: 14,
     borderRadius: 12,
+    // borderColor: 'grey',
+    // borderWidth: 3,
     marginBottom: 16,
+  },
+  cardTwo: {
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    borderWidth: 3,
   },
   profileRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    position: 'relative',
   },
   profileImage: {
     width: 80,
@@ -152,36 +161,40 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   subText: {
-    fontSize: 14,
-    color: '#555',
+    fontSize: 15,
     fontFamily: 'Poppins-Regular',
   },
   editButton: {
+    position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#eee',
+    borderColor: 'black',
+    borderWidth: 3,
     paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 8,
+    borderRadius: 28,
+    right: 0,
+    top: 0,
   },
   editText: {
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 15,
     marginRight: 4,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: 'Poppins-SemiBold',
     marginBottom: 8,
   },
   infoRow: {
-    marginBottom: 8,
+    marginBottom: 5,
   },
   label: {
     fontFamily: 'Poppins-SemiBold',
+    fontSize: 18,
     color: '#555',
   },
   value: {
-    fontSize: 15,
+    fontSize: 18,
     color: '#000',
     fontFamily: 'Poppins-Regular',
   },

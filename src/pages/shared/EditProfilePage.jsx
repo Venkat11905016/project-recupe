@@ -3,35 +3,22 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
-  Image,
   ScrollView,
-  Alert,
+  StyleSheet,
   StatusBar,
+  Image,
 } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/Feather';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 const EditProfilePage = ({ navigation }) => {
-  const [profile, setProfile] = useState({
-    recupeId: 'REC_DC_05271256',
-    centerName: 'Ajay diagnostic center',
-    picName: 'Ajay',
-    email: 'Ajaymeru02@gmail.com',
-    phone: '9999999999',
-    state: '',
-    city: 'Hyd',
-    pincode: '',
-    address: '',
-  });
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const [imageUri, setImageUri] = useState(null);
-
-  const handleChange = (field, value) => {
-    setProfile({ ...profile, [field]: value });
-  };
-
-  const handleImagePick = () => {
+  const handleUpload = () => {
     launchImageLibrary(
       {
         mediaType: 'photo',
@@ -41,113 +28,80 @@ const EditProfilePage = ({ navigation }) => {
         if (response.didCancel) {
           console.log('User cancelled image picker');
         } else if (response.errorCode) {
-          Alert.alert('Image Picker Error', response.errorMessage);
-        } else {
-          const uri = response.assets[0].uri;
-          setImageUri(uri);
+          console.log('ImagePicker Error: ', response.errorMessage);
+        } else if (response.assets && response.assets.length > 0) {
+          setSelectedImage(response.assets[0]);
         }
       },
     );
   };
 
-  const handleUpdate = () => {
-    console.log('Updated profile:', profile);
-    console.log('Selected image:', imageUri);
-    navigation.goBack();
-  };
+  const renderInput = (label, value = '', disabled = false) => (
+    <View style={styles.inputWrapper}>
+      <Text style={styles.label}>{label}</Text>
+      <TextInput
+        style={[styles.input, disabled && styles.disabledInput]}
+        value={value}
+        editable={!disabled}
+        placeholderTextColor="#aaa"
+      />
+    </View>
+  );
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+      {/* Header */}
       <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
-      <Text style={styles.header}>Edit Profile</Text>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <FontAwesome6 name="arrow-left" size={30} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Entypo name="home" size={30} color="#fff" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Edit Profile</Text>
+      </View>
 
-      <Image
-        source={
-          imageUri
-            ? { uri: imageUri }
-            : require('../../assets/images/home-vector.60eaedb1083724ec6f59.png')
-        }
-        style={styles.image}
-        resizeMode="cover"
-      />
+      <ScrollView contentContainerStyle={styles.scroll}>
+        {/* Upload Section */}
+        <View style={styles.uploadContainer}>
+          {selectedImage ? (
+            <Image
+              source={{ uri: selectedImage.uri }}
+              style={styles.uploadedImage}
+            />
+          ) : (
+            <MaterialIcon name="image" size={60} color="#0097A7" />
+          )}
 
-      <TouchableOpacity style={styles.uploadButton} onPress={handleImagePick}>
-        <Text style={styles.uploadText}>UPLOAD</Text>
-      </TouchableOpacity>
+          <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
+            <Text style={styles.uploadText}>UPLOAD</Text>
+          </TouchableOpacity>
+        </View>
 
-      <TextInput
-        style={styles.input}
-        value={profile.recupeId}
-        editable={false}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Center Name"
-        value={profile.centerName}
-        onChangeText={text => handleChange('centerName', text)}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="PIC Name"
-        value={profile.picName}
-        onChangeText={text => handleChange('picName', text)}
-      />
-
-      <TextInput style={styles.input} value={profile.email} editable={false} />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Phone"
-        value={profile.phone}
-        onChangeText={text => handleChange('phone', text)}
-        keyboardType="phone-pad"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="State"
-        value={profile.state}
-        onChangeText={text => handleChange('state', text)}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="City"
-        value={profile.city}
-        onChangeText={text => handleChange('city', text)}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Pincode"
-        value={profile.pincode}
-        onChangeText={text => handleChange('pincode', text)}
-        keyboardType="numeric"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Address"
-        value={profile.address}
-        onChangeText={text => handleChange('address', text)}
-        multiline
-      />
-
+        {/* Input Fields */}
+        {renderInput('Recup ID', 'REC_DC_83941094', true)}
+        {renderInput('Center Name', 'Lakshmi DC')}
+        {renderInput('PIC Name', 'Lakshmi')}
+        {renderInput('Email', 'lakshmi.impaxive+1@gmail.com', true)}
+        {renderInput('Phone', '8309005002')}
+        {renderInput('State')}
+        {renderInput('City', 'Hyderabad')}
+        {renderInput('Pincode')}
+        {renderInput('Address')}
+      </ScrollView>
+      {/* Buttons */}
       <View style={styles.buttonRow}>
-        <TouchableOpacity
-          style={styles.cancelBtn}
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity style={styles.cancelButton}>
           <Text style={styles.cancelText}>CANCEL</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.updateBtn} onPress={handleUpdate}>
+        <TouchableOpacity style={styles.updateButton}>
           <Text style={styles.updateText}>UPDATE</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -156,72 +110,108 @@ export default EditProfilePage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: '#fff',
   },
   header: {
-    fontSize: 22,
+    backgroundColor: '#0097A7',
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#0097A7',
+    // padding: 20,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
+  },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 23,
     textAlign: 'center',
-    marginVertical: 10,
-    color: '#006d6d',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-Regular',
   },
-  image: {
-    width: '100%',
-    height: 120,
-    marginVertical: 10,
-    borderRadius: 8,
-    backgroundColor: '#f0f0f0',
+  scroll: {
+    padding: 16,
   },
-  uploadButton: {
-    alignSelf: 'center',
-    borderWidth: 1,
-    borderColor: '#006d6d',
-    paddingVertical: 6,
-    paddingHorizontal: 16,
-    borderRadius: 5,
+  uploadContainer: {
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  uploadedImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    resizeMode: 'cover',
     marginBottom: 10,
   },
+  uploadButton: {
+    marginTop: 12,
+    borderWidth: 2,
+    borderColor: '#0097A7',
+    paddingVertical: 6,
+    paddingHorizontal: 50,
+    borderRadius: 6,
+  },
   uploadText: {
-    color: '#006d6d',
+    color: '#0097A7',
+    fontSize: 16,
     fontFamily: 'Poppins-SemiBold',
   },
+  inputWrapper: {
+    marginBottom: 16,
+  },
+  label: {
+    marginBottom: 6,
+    fontSize: 18,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#333',
+  },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 12,
+    borderWidth: 3,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 8,
-    marginVertical: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 15,
     fontFamily: 'Poppins-Regular',
+    color: '#000',
+  },
+  disabledInput: {
+    color: '#888',
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
+    padding: 20,
   },
-  cancelBtn: {
-    borderWidth: 1,
-    borderColor: '#009999',
+  cancelButton: {
+    flex: 1,
+    borderWidth: 2,
+    borderColor: '#0097A7',
     paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    flex: 0.48,
-  },
-  updateBtn: {
-    backgroundColor: '#009999',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    flex: 0.48,
+    marginRight: 10,
+    borderRadius: 6,
+    alignItems: 'center',
   },
   cancelText: {
-    color: '#009999',
-    textAlign: 'center',
-    fontFamily: 'Poppins-Bold',
+    color: '#0097A7',
+    fontSize: 15,
+    fontFamily: 'Poppins-SemiBold',
+  },
+  updateButton: {
+    flex: 1,
+    backgroundColor: '#0097A7',
+    paddingVertical: 12,
+    marginLeft: 10,
+    borderRadius: 6,
+    alignItems: 'center',
   },
   updateText: {
     color: '#fff',
-    textAlign: 'center',
-    fontFamily: 'Poppins-Bold',
+    fontSize: 15,
+    fontFamily: 'Poppins-SemiBold',
   },
 });
