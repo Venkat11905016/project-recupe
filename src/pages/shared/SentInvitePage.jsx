@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#0097A7',
     paddingTop: 10,
     paddingBottom: 20,
-    marginBottom: 10,
   },
   title: {
     fontSize: 23,
@@ -101,6 +100,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     padding: 20,
+    paddingTop: 10,
     flexGrow: 1,
   },
   label: {

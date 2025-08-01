@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#0097A7',
     paddingTop: 10,
     paddingBottom: 20,
-    marginBottom: 20,
   },
   dropdownSearchWrapper: {
     marginBottom: 10,
@@ -239,7 +238,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 19,
-    marginTop: 12,
+    marginTop: 10,
     marginBottom: 6,
     fontFamily: 'Poppins-SemiBold',
   },

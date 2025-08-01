@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0097A7',
     paddingTop: 10,
     paddingBottom: 20,
-    marginBottom: 20,
+    // marginBottom: 20,
     textAlign: 'center',
   },
   iconHeader: {
@@ -140,15 +140,16 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 15,
+    margin: 18,
   },
   backButton: {
     borderWidth: 2,
     borderColor: '#0097A7',
     borderRadius: 8,
-    paddingVertical: 12,
     paddingHorizontal: 20,
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 10,
   },
   uploadButton: {
@@ -157,6 +158,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 20,
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 10,
   },
   backText: {

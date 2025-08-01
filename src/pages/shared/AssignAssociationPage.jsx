@@ -105,11 +105,11 @@ const AssignAssociationPage = () => {
                   }
                 }}
               >
-                <FontAwesome6
-                  name={isDropdownVisible ? 'xmark' : 'chevron-down'}
-                  size={15}
-                  color="#999"
-                />
+                {isDropdownVisible ? (
+                  <FontAwesome6 name={'xmark'} size={20} color="#999" />
+                ) : (
+                  <FontAwesome6 name={'chevron-down'} size={13} color="#999" />
+                )}
               </TouchableOpacity>
             </View>
 
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#0097A7',
     paddingTop: 10,
     paddingBottom: 20,
-    marginBottom: 10,
   },
   headerLeft: {
     position: 'absolute',
@@ -198,7 +197,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   label: {
-    marginTop: 20,
+    marginTop: 15,
     marginBottom: 5,
     fontSize: 20,
     fontFamily: 'Poppins-SemiBold',

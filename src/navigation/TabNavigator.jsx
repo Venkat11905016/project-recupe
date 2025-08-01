@@ -34,7 +34,7 @@ export default function TabNavigator() {
                 style={{ paddingTop: 4 }}
               />
             );
-          } else if (route.name === 'LabReports') {
+          } else if (route.name === 'Lab Reports') {
             return (
               <FontAwesome6
                 name="file-waveform"
@@ -70,7 +70,7 @@ export default function TabNavigator() {
     >
       <Tab.Screen name="Home" component={DcHome} />
       <Tab.Screen name="Referrals" component={ReferralsPage} />
-      <Tab.Screen name="LabReports" component={LabReportsPage} />
+      <Tab.Screen name="Lab Reports" component={LabReportsPage} />
       <Tab.Screen name="More" component={MorePage} />
     </Tab.Navigator>
   );

@@ -73,7 +73,7 @@ const EditProfilePage = ({ navigation }) => {
               style={styles.uploadedImage}
             />
           ) : (
-            <MaterialIcon name="image" size={60} color="#0097A7" />
+            <MaterialIcon name="image" size={90} color="#0097A7" />
           )}
 
           <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>

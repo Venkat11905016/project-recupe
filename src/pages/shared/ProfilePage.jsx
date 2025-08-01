@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -12,10 +12,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const ProfilePage = () => {
   const navigation = useNavigation();
-
+  const [selectedImage, setSelectedImage] = useState(null);
   const user = {
     name: 'Ajay',
     centerName: 'Ajay diagnostic center',
@@ -50,11 +51,21 @@ const ProfilePage = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.card}>
           <View style={styles.profileRow}>
-            <Image
+            {/* <Image
               source={{ uri: user.imageUrl }}
               style={styles.profileImage}
               resizeMode="contain"
-            />
+            /> */}
+            {selectedImage ? (
+              <Image
+                source={{ uri: user.imageUrl }}
+                style={styles.profileImage}
+                resizeMode="contain"
+              />
+            ) : (
+              <MaterialIcon name="image" size={90} color="#0097A7" />
+            )}
+
             <View style={{ flex: 1, marginLeft: 20 }}>
               <Text style={styles.name}>{user.name}</Text>
               <Text style={styles.subText}>{user.centerName}</Text>
@@ -173,7 +184,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 28,
     right: 0,
-    top: 0,
+    top: -5,
   },
   editText: {
     fontFamily: 'Poppins-SemiBold',

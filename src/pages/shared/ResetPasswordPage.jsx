@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 20,
     alignItems: 'center',
-    marginBottom: 12,
   },
   headerTitle: {
     fontSize: 23,
@@ -131,8 +130,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   label: {
-    marginTop: 20,
-    marginBottom: 5,
+    marginTop: 15,
+    marginBottom: 8,
     fontSize: 18,
     fontFamily: 'Poppins-SemiBold',
   },
