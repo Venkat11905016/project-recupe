@@ -133,10 +133,6 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingTop: 5,
   },
-  name: {
-    fontSize: 16,
-    fontFamily: 'Poppins-SemiBold',
-  },
   text: {
     fontSize: 14,
     fontFamily: 'Poppins-Regular',
@@ -159,30 +155,28 @@ const styles = StyleSheet.create({
   newRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingTop: 12,
   },
   name: {
     fontSize: 20,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   date: {
     fontSize: 18,
-    color: '#666',
-    fontFamily: 'Poppins-Medium',
-  },
-  doctor: {
-    color: '#888',
-    marginTop: 5,
+    color: 'black',
     fontFamily: 'Poppins-Regular',
   },
   doctor: {
-    color: '#888',
+    color: 'grey',
     marginTop: 5,
+    fontSize: 17,
     fontFamily: 'Poppins-Regular',
   },
   tests: {
-    color: '#444',
+    color: 'grey',
     marginTop: 2,
+    fontSize: 17,
     fontFamily: 'Poppins-Regular',
   },
   card: {
