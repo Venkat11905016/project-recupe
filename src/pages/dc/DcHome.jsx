@@ -119,7 +119,7 @@ export default function DcHome({ navigation }) {
   }, [isFocused]);
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
 
       <CustomAlert
         isVisible={alertVisible}
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   },
   scrollWrapperOne: {
     height: 20,
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
   },
   scrollingContainer: {
     height: 20,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   header: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     color: '#fff',
     padding: 20,
     paddingVertical: 50,
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   },
   scrollWrapper: {
     flex: 1,
-    backgroundColor: '#0097A7', // header color
+    // backgroundColor: '#08979d', // header color
   },
   image: {
     width: '100%',

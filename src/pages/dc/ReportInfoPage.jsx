@@ -42,7 +42,7 @@ const ReportInfoPage = () => {
   return (
     <>
       {/* Fixed Header Section */}
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <View style={styles.iconHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <FontAwesome6 name="arrow-left" size={28} color="#fff" />
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   header: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingVertical: 14,
     paddingHorizontal: 16,
   },
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   iconHeader: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   iconButton: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     borderRadius: 5,
     padding: 4,
     alignItems: 'center',

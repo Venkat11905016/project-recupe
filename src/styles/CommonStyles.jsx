@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const CommonStyles = StyleSheet.create({
   themeColor: {
-    color: '#0097A7',
+    color: '#08979d',
   },
   cancelButton: {
     backgroundColor: '#f0f0f0',
@@ -13,7 +13,7 @@ export const CommonStyles = StyleSheet.create({
     alignItems: 'center',
   },
   createButton: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     padding: 12,
     borderRadius: 8,
     marginHorizontal: 8,
@@ -25,4 +25,4 @@ export const CommonStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-}); 
+});

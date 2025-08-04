@@ -42,7 +42,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   const submit = async () => {
-   
+
     const checkInputType = () => {
       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       const mobilePattern =
@@ -169,7 +169,7 @@ export default function LoginScreen({ navigation }) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
     >
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           {/* Top 30% Header */}
@@ -277,7 +277,7 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
   },
   firstContainer: {
     flex: 3, // 30%
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   loginBtn: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingVertical: 10,
     borderRadius: 10,
     width: '100%',
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   signup: {
-    color: '#0097A7',
+    color: '#08979d',
     fontSize: 20,
     fontFamily: 'Poppins-SemiBold',
   },
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
   },
   recupe: {
     fontSize: 22,
-    color: '#0097A7',
+    color: '#08979d',
     fontFamily: 'Poppins-Regular',
   },
 });

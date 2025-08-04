@@ -34,10 +34,10 @@ const ProfilePage = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <FontAwesome6 name="arrow-left" size={30} color="#fff" />
+          <FontAwesome6 name="arrow-left" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Entypo name="home" size={30} color="#fff" />
@@ -63,7 +63,7 @@ const ProfilePage = () => {
                 resizeMode="contain"
               />
             ) : (
-              <MaterialIcon name="image" size={90} color="#0097A7" />
+              <MaterialIcon name="image" size={90} color="#08979d" />
             )}
 
             <View style={{ flex: 1, marginLeft: 20 }}>
@@ -75,8 +75,12 @@ const ProfilePage = () => {
               style={styles.editButton}
               onPress={() => navigation.navigate('EditProfilePage')}
             >
-              <Text style={styles.editText}>EDIT</Text>
-              <MaterialCommunityIcons name="pencil" size={16} color="#000" />
+              <View style={styles.editstyles}>
+                <Text style={styles.editText}>EDIT</Text>
+              </View>
+              <View>
+                <MaterialCommunityIcons name="pencil" size={18} color="#000" />
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -125,14 +129,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     // padding: 20,
     paddingHorizontal: 15,
     paddingBottom: 15,
     paddingTop: 5,
   },
   header: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
@@ -179,17 +183,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     borderColor: 'black',
     borderWidth: 3,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     borderRadius: 28,
     right: 0,
-    top: -5,
+    top: -8,
   },
   editText: {
-    fontFamily: 'Poppins-SemiBold',
-    fontSize: 15,
-    marginRight: 4,
+    fontFamily: 'Poppins-Regular',
+    fontSize: 18,
+    marginRight: 5,
+  },
+  editstyles: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 20,

@@ -48,7 +48,7 @@ const AssignAssociationPage = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <View style={styles.headerWrapper}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -75,81 +75,104 @@ const AssignAssociationPage = () => {
       >
         <ScrollView contentContainerStyle={styles.container}>
           {/* Doctor Dropdown */}
-          <Text style={styles.label}>Doctor *</Text>
-          <View style={styles.dropdownSearchWrapper}>
-            <View style={styles.searchInputWrapper}>
-              <FontAwesome6
-                name="magnifying-glass"
-                size={16}
-                color="#999"
-                style={{ opacity: isDropdownVisible ? 1 : 0, marginRight: 6 }}
-              />
-              <TextInput
-                placeholder={isDropdownVisible ? 'Search' : 'Select Doctor'}
-                placeholderTextColor="black"
-                value={searchQuery}
-                onChangeText={text => {
-                  setSearchQuery(text);
-                  setIsDropdownVisible(true);
-                }}
-                style={styles.searchInput}
-              />
 
-              <TouchableOpacity
-                onPress={() => {
-                  if (isDropdownVisible) {
-                    setIsDropdownVisible(false);
-                    setSearchQuery('');
-                  } else {
-                    setIsDropdownVisible(true);
-                  }
-                }}
-              >
-                {isDropdownVisible ? (
-                  <FontAwesome6 name={'xmark'} size={20} color="#999" />
-                ) : (
-                  <FontAwesome6 name={'chevron-down'} size={13} color="#999" />
-                )}
-              </TouchableOpacity>
-            </View>
-
-            {isDropdownVisible && (
-              <View style={styles.dropdownList}>
-                {doctorList
-                  .filter(item =>
-                    item.label
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase()),
-                  )
-                  .map(item => (
-                    <TouchableOpacity
-                      key={item.value}
-                      style={styles.dropdownItem}
-                      onPress={() => {
-                        setSelectedDoctor(item.value);
-                        setSearchQuery(item.label);
+          {recupID.length == 0 && (
+            <>
+              <Text style={styles.label}>Doctor *</Text>
+              <View style={styles.dropdownSearchWrapper}>
+                <View style={styles.searchInputWrapper}>
+                  {isDropdownVisible && (
+                    <FontAwesome6
+                      name="magnifying-glass"
+                      size={16}
+                      color="#999"
+                      style={{ marginLeft: 15, marginRight: -5 }}
+                    />
+                  )}
+                  <TextInput
+                    placeholder={isDropdownVisible ? 'Search' : 'Select Doctor'}
+                    placeholderTextColor="black"
+                    value={searchQuery}
+                    onChangeText={text => {
+                      setSearchQuery(text);
+                      setIsDropdownVisible(true);
+                    }}
+                    onPress={() => {
+                      if (isDropdownVisible) {
                         setIsDropdownVisible(false);
-                      }}
-                    >
-                      <Text style={styles.dropdownText}>{item.label}</Text>
-                    </TouchableOpacity>
-                  ))}
+                        setSearchQuery('');
+                      } else {
+                        setIsDropdownVisible(true);
+                      }
+                    }}
+                    style={styles.searchInput}
+                  />
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (isDropdownVisible) {
+                        setIsDropdownVisible(false);
+                        setSearchQuery('');
+                      } else {
+                        setIsDropdownVisible(true);
+                      }
+                    }}
+                  >
+                    {isDropdownVisible ? (
+                      <FontAwesome6 name={'xmark'} size={20} color="#999" />
+                    ) : (
+                      <FontAwesome6
+                        name={'chevron-down'}
+                        size={13}
+                        color="#999"
+                      />
+                    )}
+                  </TouchableOpacity>
+                </View>
+
+                {isDropdownVisible && (
+                  <View style={styles.dropdownList}>
+                    {doctorList
+                      .filter(item =>
+                        item.label
+                          .toLowerCase()
+                          .includes(searchQuery.toLowerCase()),
+                      )
+                      .map(item => (
+                        <TouchableOpacity
+                          key={item.value}
+                          style={styles.dropdownItem}
+                          onPress={() => {
+                            setSelectedDoctor(item.value);
+                            setSearchQuery(item.label);
+                            setIsDropdownVisible(false);
+                          }}
+                        >
+                          <Text style={styles.dropdownText}>{item.label}</Text>
+                        </TouchableOpacity>
+                      ))}
+                  </View>
+                )}
               </View>
-            )}
-          </View>
+            </>
+          )}
 
-          {/* OR Section */}
-          <Text style={styles.orText}>OR</Text>
+          {recupID.length == 0 && selectedDoctor.length == 0 && (
+            <Text style={styles.orText}>OR</Text>
+          )}
 
-          {/* Recupe ID Input */}
-          <Text style={styles.label}>Recupe ID *</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter Recupe ID"
-            value={recupID}
-            onChangeText={setRecupID}
-            placeholderTextColor="#aaa"
-          />
+          {selectedDoctor.length == 0 && (
+            <>
+              <Text style={styles.label}>Recupe ID *</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter Recupe ID"
+                value={recupID}
+                onChangeText={setRecupID}
+                placeholderTextColor="#aaa"
+              />
+            </>
+          )}
         </ScrollView>
       </KeyboardAvoidingView>
 
@@ -165,14 +188,14 @@ export default AssignAssociationPage;
 
 const styles = StyleSheet.create({
   headerWrapper: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     height: 60,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
   titleWrapper: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingTop: 10,
     paddingBottom: 20,
   },
@@ -232,6 +255,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins-Regular',
     color: '#000',
+    paddingLeft: 15,
   },
   dropdownList: {
     borderWidth: 3,
@@ -256,7 +280,7 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',

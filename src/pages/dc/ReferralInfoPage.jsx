@@ -24,7 +24,7 @@ const ReferralInfoPage = () => {
   return (
     <View style={{ flex: 1 }}>
       {/* Header - OUTSIDE ScrollView */}
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <View style={styles.iconHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <FontAwesome6 name="arrow-left" size={28} color="#fff" />
@@ -83,14 +83,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   header: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingTop: 10,
     paddingBottom: 20,
     // marginBottom: 20,
     textAlign: 'center',
   },
   iconHeader: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   testChip: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingVertical: 4,
     paddingHorizontal: 20,
     borderRadius: 20,
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     borderWidth: 2,
-    borderColor: '#0097A7',
+    borderColor: '#08979d',
     borderRadius: 8,
     paddingHorizontal: 20,
     flex: 1,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   uploadButton: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 20,
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   backText: {
     textAlign: 'center',
     fontSize: 15,
-    color: '#0097A7',
+    color: '#08979d',
     fontFamily: 'Poppins-SemiBold',
   },
   uploadText: {

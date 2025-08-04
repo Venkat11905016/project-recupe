@@ -26,10 +26,10 @@ const MorePage = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <FontAwesome6 name="arrow-left" size={30} color="#fff" />
+          <FontAwesome6 name="arrow-left" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Entypo name="home" size={30} color="#fff" />
@@ -46,8 +46,8 @@ const MorePage = () => {
             <Text style={styles.label}>{item.label}</Text>
             <MaterialCommunityIcons
               name="chevron-right"
-              size={30}
-              color="#0097A7"
+              size={29}
+              color="#08979d"
             />
           </TouchableOpacity>
         ))}
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     // padding: 20,
     paddingHorizontal: 15,
     paddingBottom: 15,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 23,
     textAlign: 'center',
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     color: 'white',
     fontFamily: 'Poppins-Regular',
     paddingTop: 10,

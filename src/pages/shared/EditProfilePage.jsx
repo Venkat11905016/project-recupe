@@ -51,10 +51,10 @@ const EditProfilePage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <FontAwesome6 name="arrow-left" size={30} color="#fff" />
+          <FontAwesome6 name="arrow-left" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Entypo name="home" size={30} color="#fff" />
@@ -73,7 +73,7 @@ const EditProfilePage = ({ navigation }) => {
               style={styles.uploadedImage}
             />
           ) : (
-            <MaterialIcon name="image" size={90} color="#0097A7" />
+            <MaterialIcon name="image" size={90} color="#08979d" />
           )}
 
           <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   header: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingTop: 10,
     paddingBottom: 20,
   },
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     // padding: 20,
     paddingHorizontal: 15,
     paddingBottom: 15,
@@ -150,13 +150,13 @@ const styles = StyleSheet.create({
   uploadButton: {
     marginTop: 12,
     borderWidth: 2,
-    borderColor: '#0097A7',
+    borderColor: '#08979d',
     paddingVertical: 6,
     paddingHorizontal: 50,
     borderRadius: 6,
   },
   uploadText: {
-    color: '#0097A7',
+    color: '#08979d',
     fontSize: 16,
     fontFamily: 'Poppins-SemiBold',
   },
@@ -190,20 +190,20 @@ const styles = StyleSheet.create({
   cancelButton: {
     flex: 1,
     borderWidth: 2,
-    borderColor: '#0097A7',
+    borderColor: '#08979d',
     paddingVertical: 12,
     marginRight: 10,
     borderRadius: 6,
     alignItems: 'center',
   },
   cancelText: {
-    color: '#0097A7',
+    color: '#08979d',
     fontSize: 15,
     fontFamily: 'Poppins-SemiBold',
   },
   updateButton: {
     flex: 1,
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingVertical: 12,
     marginLeft: 10,
     borderRadius: 6,

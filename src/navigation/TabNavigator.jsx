@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -9,52 +10,30 @@ import MorePage from '../pages/dc/More';
 
 const Tab = createBottomTabNavigator();
 
+const CustomTabBarButton = ({ children, onPress }) => (
+  <TouchableOpacity
+    style={styles.customButtonContainer}
+    onPress={onPress}
+    activeOpacity={0.8}
+  >
+    <View style={styles.customButton}>{children}</View>
+  </TouchableOpacity>
+);
+
 export default function TabNavigator() {
+  const [userRole, setUserRole] = useState('');
+
+  useEffect(() => {
+    // Fetch from AsyncStorage or API
+    setUserRole('dc');
+  }, []);
   return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          if (route.name === 'Home') {
-            return (
-              <Entypo
-                name="home"
-                size={size}
-                color={color}
-                style={{ paddingTop: 4 }}
-              />
-            );
-          } else if (route.name === 'Referrals') {
-            return (
-              <FontAwesome6
-                name="person-rays"
-                size={size}
-                color={color}
-                style={{ paddingTop: 4 }}
-              />
-            );
-          } else if (route.name === 'Lab Reports') {
-            return (
-              <FontAwesome6
-                name="file-waveform"
-                size={size}
-                color={color}
-                style={{ paddingTop: 4 }}
-              />
-            );
-          } else if (route.name === 'More') {
-            return (
-              <Entypo
-                name="dots-three-horizontal"
-                size={size}
-                color={color}
-                style={{ paddingTop: 4 }}
-              />
-            );
-          }
-        },
-        tabBarActiveTintColor: '#0097A7',
+        tabBarShowLabel: true,
+        tabBarActiveTintColor: '#08979d',
         tabBarInactiveTintColor: 'black',
         tabBarLabelStyle: {
           fontSize: 14,
@@ -63,15 +42,120 @@ export default function TabNavigator() {
           paddingBottom: 1,
         },
         tabBarStyle: {
-          paddingVertical: 1,
+          // position: 'absolute',
           height: 70,
+          borderTopWidth: 0.5,
+          borderTopColor: '#ccc',
+          elevation: 5,
+          backgroundColor: '#fff',
+        },
+        tabBarIcon: ({ focused, color, size }) => {
+          if (route.name === 'Home') {
+            return (
+              <Entypo
+                name="home"
+                size={size}
+                color={color}
+                style={styles.icon}
+              />
+            );
+          } else if (route.name === 'Referrals') {
+            return (
+              <FontAwesome6
+                name="person-rays"
+                size={size}
+                color={color}
+                style={styles.icon}
+              />
+            );
+          } else if (route.name === 'Lab Reports') {
+            return (
+              <FontAwesome6
+                name="file-waveform"
+                size={size}
+                color={color}
+                style={styles.icon}
+              />
+            );
+          } else if (route.name === 'More') {
+            return (
+              <Entypo
+                name="dots-three-horizontal"
+                size={size}
+                color={color}
+                style={styles.icon}
+              />
+            );
+          }
         },
       })}
     >
       <Tab.Screen name="Home" component={DcHome} />
       <Tab.Screen name="Referrals" component={ReferralsPage} />
+      {userRole === 'doctor' && (
+        <Tab.Screen
+          name="Add"
+          component={() => null}
+          options={{
+            tabBarButton: props => (
+              <CustomTabBarButton
+                {...props}
+                onPress={() => {
+                  // Handle Add action
+                }}
+              >
+                <FontAwesome6 name="plus" size={24} color="#fff" />
+              </CustomTabBarButton>
+            ),
+          }}
+        />
+      )}
+      {/* <Tab.Screen
+        name="Add"
+        component={() => null}
+        options={{
+          tabBarButton: props => (
+            <CustomTabBarButton
+              {...props}
+              onPress={() => {
+                // Handle add button press, like navigation.navigate('AddPage')
+              }}
+            >
+              <FontAwesome6 name="plus" size={24} color="#fff" />
+            </CustomTabBarButton>
+          ),
+        }}
+      /> */}
+
       <Tab.Screen name="Lab Reports" component={LabReportsPage} />
       <Tab.Screen name="More" component={MorePage} />
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    paddingTop: 4,
+  },
+  customButtonContainer: {
+    top: -30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  customButton: {
+    width: 65,
+    height: 65,
+    borderRadius: 32.5,
+    backgroundColor: '#08979d',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
+});

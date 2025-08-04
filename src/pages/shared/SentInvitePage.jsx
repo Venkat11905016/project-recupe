@@ -35,10 +35,10 @@ const SentInvitePage = () => {
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
       {/* Header Section - OUTSIDE KeyboardAvoidingView */}
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <FontAwesome6 name="arrow-left" size={30} color="#fff" />
+          <FontAwesome6 name="arrow-left" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Entypo name="home" size={30} color="#fff" />
@@ -82,13 +82,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingHorizontal: 15,
     paddingBottom: 15,
     paddingTop: 5,
   },
   titleWrapper: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingTop: 10,
     paddingBottom: 20,
   },
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   button: {
     // marginTop: 40,
     margin: 10,
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingVertical: 10,
     borderRadius: 8,
     alignItems: 'center',

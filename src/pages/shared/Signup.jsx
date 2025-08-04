@@ -168,7 +168,7 @@ export default function Signup({ navigation }) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
     >
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           {/* 30% Header */}
@@ -278,7 +278,7 @@ export default function Signup({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
   },
   firstContainer: {
     flex: 3, // 30%
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   signupBtn: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingVertical: 12,
     borderRadius: 10,
     marginTop: 20,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
   },
   loginLink: {
     fontSize: 20,
-    color: '#0097A7',
+    color: '#08979d',
     fontFamily: 'Poppins-SemiBold',
   },
   powered: {
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
   },
   recupe: {
-    color: '#0097A7',
+    color: '#08979d',
     fontFamily: 'Poppins-Bold',
   },
   mobileInputContainer: {

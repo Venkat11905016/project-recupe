@@ -59,8 +59,8 @@ export default function ReferralsPage() {
           <Text style={styles.date}>{item.date}</Text>
           <MaterialCommunityIcons
             name="chevron-right"
-            size={30}
-            color="#0097A7"
+            size={29}
+            color="#08979d"
           />
         </View>
       </View>
@@ -78,10 +78,10 @@ export default function ReferralsPage() {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <FontAwesome6 name="arrow-left" size={30} color="#fff" />
+          <FontAwesome6 name="arrow-left" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Entypo name="home" size={30} color="#fff" />
@@ -110,7 +110,7 @@ export default function ReferralsPage() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
   header: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     fontSize: 23,
     paddingTop: 10,
     paddingBottom: 20,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingHorizontal: 15,
     paddingBottom: 15,
     paddingTop: 5,
@@ -140,7 +140,10 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 30,
     height: 60,
-    margin: 18,
+    // margin: 18,
+    marginVertical: 18,
+    marginTop: 20,
+    marginHorizontal: 12,
     paddingHorizontal: 10,
     paddingLeft: 20,
   },
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
   },
 
   searchIcon: {
-    marginLeft: 10,
+    marginRight: 15,
   },
   // searchInput: {
   //   margin: 15,
@@ -164,8 +167,8 @@ const styles = StyleSheet.create({
   list: { paddingHorizontal: 15 },
   card: {
     borderWidth: 3,
-    borderColor: '#dfdfdfff',
-    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: 5,
     padding: 15,
     marginBottom: 15,
   },

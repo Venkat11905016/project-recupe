@@ -42,7 +42,7 @@ const ResetPasswordPage = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      <StatusBar backgroundColor="#0097A7" barStyle="light-content" />
+      <StatusBar backgroundColor="#08979d" barStyle="light-content" />
 
       <View style={styles.iconHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -109,13 +109,13 @@ export default ResetPasswordPage;
 
 const styles = StyleSheet.create({
   iconHeader: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
   },
   titleContainer: {
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingTop: 10,
     paddingBottom: 20,
     alignItems: 'center',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 40,
-    backgroundColor: '#0097A7',
+    backgroundColor: '#08979d',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
