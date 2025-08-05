@@ -7,6 +7,8 @@ import DcHome from '../pages/dc/DcHome';
 import LabReportsPage from '../pages/dc/LabReports';
 import ReferralsPage from '../pages/dc/ReferralsPage';
 import MorePage from '../pages/dc/More';
+import CreateReferral from '../pages/doctor/CreateReferral';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +24,7 @@ const CustomTabBarButton = ({ children, onPress }) => (
 
 export default function TabNavigator() {
   const [userRole, setUserRole] = useState('');
-
+  const navigation = useNavigation();
   useEffect(() => {
     // Fetch from AsyncStorage or API
     setUserRole('dc');
@@ -92,16 +94,16 @@ export default function TabNavigator() {
     >
       <Tab.Screen name="Home" component={DcHome} />
       <Tab.Screen name="Referrals" component={ReferralsPage} />
-      {userRole === 'doctor' && (
+      {userRole === 'docor' && (
         <Tab.Screen
-          name="Add"
-          component={() => null}
+          name="CreateRefferal"
+          component={CreateReferral}
           options={{
             tabBarButton: props => (
               <CustomTabBarButton
                 {...props}
                 onPress={() => {
-                  // Handle Add action
+                  navigation.navigate('CreateRefferal');
                 }}
               >
                 <FontAwesome6 name="plus" size={24} color="#fff" />
@@ -110,23 +112,6 @@ export default function TabNavigator() {
           }}
         />
       )}
-      {/* <Tab.Screen
-        name="Add"
-        component={() => null}
-        options={{
-          tabBarButton: props => (
-            <CustomTabBarButton
-              {...props}
-              onPress={() => {
-                // Handle add button press, like navigation.navigate('AddPage')
-              }}
-            >
-              <FontAwesome6 name="plus" size={24} color="#fff" />
-            </CustomTabBarButton>
-          ),
-        }}
-      /> */}
-
       <Tab.Screen name="Lab Reports" component={LabReportsPage} />
       <Tab.Screen name="More" component={MorePage} />
     </Tab.Navigator>

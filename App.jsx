@@ -19,6 +19,9 @@ import ReferralsPage from './src/pages/dc/ReferralsPage';
 import TabNavigator from './src/navigation/TabNavigator';
 import ProfilePage from './src/pages/shared/ProfilePage';
 import ResetPasswordPage from './src/pages/shared/ResetPasswordPage';
+import AccountPage from './src/pages/shared/AccountPage';
+import OTPVerificationScreen from './src/pages/shared/OTPVerificationScreen';
+import PasswordSetUp from './src/pages/shared/PasswordSetUp';
 // import AdminDashboard from './pages/AdminDashboard';
 // import UserDashboard from './pages/UserDashboard';
 
@@ -27,16 +30,14 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }} 
+      // initialRouteName=''
+      >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="ReportInfo" component={ReportInfoPage} />
         <Stack.Screen name="ReferralInfo" component={ReferralInfoPage} />
-        {/* <Stack.Screen name="DcHome" component={DcHome} />
-        <Stack.Screen name="LabReportsPage" component={LabReportsPage} />
-        <Stack.Screen name="MorePage" component={MorePage} /> */}
-        {/* <Stack.Screen name="ReferralsPage" component={ReferralsPage} /> */}
         <Stack.Screen name="AnalyticsPage" component={AnalyticsPage} />
         <Stack.Screen
           name="AssignAssociationPage"
@@ -47,9 +48,12 @@ export default function App() {
         <Stack.Screen name="SentInvitePage" component={SentInvitePage} />
         <Stack.Screen name="ProfilePage" component={ProfilePage} />
         <Stack.Screen name="ResetPasswordPage" component={ResetPasswordPage} />
-
-        {/* <Stack.Screen name="AdminDashboard" component={AdminDashboard} />
-        <Stack.Screen name="UserDashboard" component={UserDashboard} /> */}
+        <Stack.Screen name="AccountPage" component={AccountPage} />
+        <Stack.Screen
+          name="OtpVerification"
+          component={OTPVerificationScreen}
+        />
+        <Stack.Screen name="PasswordSetUp" component={PasswordSetUp} />
       </Stack.Navigator>
     </NavigationContainer>
   );

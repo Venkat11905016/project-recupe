@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import CustomAlert from '../../components/CustomAlert';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Signup({ navigation }) {
   const [content, setContent] = useState({
@@ -23,7 +24,7 @@ export default function Signup({ navigation }) {
     recupe_id: null,
   });
   const [selected, setSelected] = useState({ key: 0, value: '' });
-
+  const navigator = useNavigation();
   const [loading, setLoading] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertProps, setAlertProps] = useState({
@@ -119,19 +120,32 @@ export default function Signup({ navigation }) {
         let data = await apiRes.json();
         console.log(data);
         if (data.status === 'S') {
-          setAlertProps({
-            ...alertProps,
-            message: 'Signup submitted. Check email for OTP.',
-            canRedirect: true,
+          // setAlertProps({
+          //   ...alertProps,
+          //   message: 'Signup submitted. Check email for OTP.',
+          //   canRedirect: true,
+          // });
+
+          // showAlert();
+          // setLoading(true);
+          AsyncStorage.setItem('correl_id', data.correl_id);
+          // setTimeout(() => {
+          //   navigation.replace('OtpVerification', {
+          //     correl_id: data.correl_id,
+          //   });
+          // }, 1000);
+          navigation.replace('OtpVerification', {
+            correl_id: data.correl_id,
           });
 
-          showAlert();
-          AsyncStorage.setItem('correl_id', data.correl_id);
-          setTimeout(() => {
-            navigation.replace('OtpVerification', {
-              correl_id: data.correl_id,
-            });
-          }, 1000);
+          //           const handleAlertClose = () => {
+          //   setAlertVisible(false);
+          //   if (alertProps.canRedirect) {
+          //     navigation.replace('OtpVerification', {
+          //       correl_id: data.correl_id,
+          //     });
+          //   }
+          // };
         } else if (data.status === 'E') {
           await AsyncStorage.clear();
           setAlertProps({
@@ -208,20 +222,6 @@ export default function Signup({ navigation }) {
                   }
                 />
 
-                {/* <TextInput
-                  style={styles.input}
-                  placeholder="+91  Mobile"
-                  placeholderTextColor="#000"
-                  keyboardType="numeric"
-                  value={content.mobile}
-                  maxLength={10}
-                  onChangeText={input =>
-                    setContent({
-                      ...content,
-                      mobile: input,
-                    })
-                  }
-                /> */}
                 <View style={styles.mobileInputContainer}>
                   <Text style={styles.countryCode}>+91</Text>
                   <TextInput
@@ -231,12 +231,13 @@ export default function Signup({ navigation }) {
                     keyboardType="numeric"
                     value={content.mobile}
                     maxLength={10}
-                    onChangeText={input =>
+                    onChangeText={input => {
+                      const onlyNumbers = input.replace(/[^0-9]/g, '');
                       setContent({
                         ...content,
-                        mobile: input,
-                      })
-                    }
+                        mobile: onlyNumbers,
+                      });
+                    }}
                   />
                 </View>
                 <TouchableOpacity

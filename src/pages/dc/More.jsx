@@ -46,7 +46,7 @@ const MorePage = () => {
             <Text style={styles.label}>{item.label}</Text>
             <MaterialCommunityIcons
               name="chevron-right"
-              size={29}
+              size={35}
               color="#08979d"
             />
           </TouchableOpacity>

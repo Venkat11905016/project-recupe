@@ -42,6 +42,65 @@ export default function LoginScreen({ navigation }) {
   };
 
   const submit = async () => {
+    // let apiRes = await fetch('https://recupe.in/api/login', {
+    //   // let apiRes = await fetch('https://r/api/login', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Access-Control-Origin': '*',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     username: 'lakshmi.impaxive+1@gmail.com',
+    //     password: 'Impaxive@1',
+    //   }),
+    // });
+    // let data = await apiRes.json();
+    // if (data.status === 'S') {
+    //   console.log(data, '========== login');
+    //   await AsyncStorage.setItem('userData', JSON.stringify(data.result_info));
+    //   await AsyncStorage.setItem('token', data.token);
+    //   await AsyncStorage.setItem('recupe_id', data.recupe_id);
+    //   await AsyncStorage.setItem('correl_id', data.correl_id);
+    //   await AsyncStorage.setItem('role_id', String(data.role_id));
+
+    //   if (data?.is_profile_updated === 'N') {
+    //     // Navigate to profile page for profile update
+    //     navigation.navigate('ProfilePage');
+    //     return;
+    //   }
+    //   if (data?.is_first_time_login === 'Y') {
+    //     // Navigate to reset password page for first time login
+    //     navigation.navigate('ResetPasswordPage');
+    //     return;
+    //   }
+    //   // Role-based navigation
+    //   if (data?.is_first_time_login === 'N') {
+    //     navigation.navigate('MainTabs', { Screen: 'DcHome' });
+    //     return;
+    //   }
+
+    //   // if (data?.role_id === 3) {
+    //   //   await AsyncStorage.setItem('dc_id', String(data.result_info.dc_id));
+    //   // }
+
+    //   navigation.replace('MainTabs', { Screen: 'Home' });
+    // } else if (data.status === 'E') {
+    //   await AsyncStorage.clear();
+    //   setAlertProps({
+    //     ...alertProps,
+    //     message: data.message,
+    //     canRedirect: false,
+    //   });
+    //   showAlert(data.message);
+    // } else {
+    //   await AsyncStorage.clear();
+    //   setAlertProps({
+    //     ...alertProps,
+    //     message: 'Invalid Credentials',
+    //     canRedirect: false,
+    //   });
+    //   showAlert('Invalid Credentials');
+    // }
 
     const checkInputType = () => {
       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -113,7 +172,7 @@ export default function LoginScreen({ navigation }) {
 
           if (data?.is_profile_updated === 'N') {
             // Navigate to profile page for profile update
-            navigation.navigate('ProfilePage');
+            navigation.navigate('AccountPage');
             return;
           }
           if (data?.is_first_time_login === 'Y') {

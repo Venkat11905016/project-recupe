@@ -14,6 +14,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { redirectLogin, requestOptions } from '../../../token';
 import CustomAlert from '../../components/CustomAlert';
+import { ActivityIndicator } from 'react-native';
+
 export default function DcHome({ navigation }) {
   console.log('the navigation is ', navigation);
   const isFocused = useIsFocused();
@@ -54,10 +56,11 @@ export default function DcHome({ navigation }) {
 
         let storedDcId = await AsyncStorage.getItem('dc_id');
         let dc_id = storedDcId || userInfo.dc_id || '';
-        console.log(dc_id, '==========');
+        // await AsyncStorage.setItem('dc_id', dc_id);
+        console.log('dc id is', dc_id, '==========,dc_id');
 
         let correl_id = (await AsyncStorage.getItem('correl_id')) || '';
-        console.log(correl_id, '=====================');
+        console.log('correl id is', correl_id, '=====================');
 
         if (!userRole) {
           console.log('No user role found');
@@ -67,7 +70,7 @@ export default function DcHome({ navigation }) {
 
         let apiRes;
         let headers = await requestOptions();
-
+        console.log('theisdkhdfsadfsd', userRole);
         if (userRole == 2) {
           apiRes = await fetch(
             `https://recupe.in/api/getDoctorDashboard/${correl_id}`,
@@ -147,7 +150,11 @@ export default function DcHome({ navigation }) {
           </View>
           {loading ? (
             <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>Loading...</Text>
+              <ActivityIndicator
+                size="large"
+                color="#08979d"
+                style={{ marginTop: 10 }}
+              />
             </View>
           ) : content ? (
             <>

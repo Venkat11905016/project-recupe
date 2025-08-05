@@ -94,7 +94,12 @@ const EditProfilePage = ({ navigation }) => {
       </ScrollView>
       {/* Buttons */}
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.cancelButton}>
+        <TouchableOpacity
+          style={styles.cancelButton}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
           <Text style={styles.cancelText}>CANCEL</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.updateButton}>
@@ -195,6 +200,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 6,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   cancelText: {
     color: '#08979d',
@@ -208,6 +214,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderRadius: 6,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   updateText: {
     color: '#fff',

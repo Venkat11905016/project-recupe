@@ -263,6 +263,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 5,
     padding: 10,
+    paddingHorizontal: 25,
+    paddingBottom: 50,
   },
   dropdownItem: {
     paddingVertical: 8,
