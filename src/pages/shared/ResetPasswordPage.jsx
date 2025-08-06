@@ -1,3 +1,111 @@
+// import React, { useState } from 'react';
+// import {
+//   View,
+//   Text,
+//   TextInput,
+//   TouchableOpacity,
+//   StyleSheet,
+//   Alert,
+//   ScrollView,
+//   StatusBar,
+// } from 'react-native';
+// import Entypo from 'react-native-vector-icons/Entypo';
+// import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+// import { useNavigation } from '@react-navigation/native';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+// const ResetPasswordPage = () => {
+//   const [oldPassword, setOldPassword] = useState('');
+//   const [newPassword, setNewPassword] = useState('');
+//   const [confirmPassword, setConfirmPassword] = useState('');
+//   const [showOld, setShowOld] = useState(false);
+//   const [showNew, setShowNew] = useState(false);
+//   const [showConfirm, setShowConfirm] = useState(false);
+
+//   const navigation = useNavigation();
+
+//   const handleReset = () => {
+//     if (!oldPassword || !newPassword || !confirmPassword) {
+//       Alert.alert('Validation Error', 'Please fill all fields');
+//       return;
+//     }
+
+//     if (newPassword !== confirmPassword) {
+//       Alert.alert('Validation Error', 'New passwords do not match');
+//       return;
+//     }
+
+//     Alert.alert('Success', 'Password updated successfully');
+//     setOldPassword('');
+//     setNewPassword('');
+//     setConfirmPassword('');
+//   };
+
+//   return (
+//     <View style={{ flex: 1, backgroundColor: '#fff' }}>
+//       <StatusBar backgroundColor="#08979d" barStyle="light-content" />
+
+//       <View style={styles.iconHeader}>
+//         <TouchableOpacity onPress={() => navigation.goBack()}>
+//           <FontAwesome6 name="arrow-left" size={28} color="#fff" />
+//         </TouchableOpacity>
+//         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+//           <Entypo name="home" size={28} color="#fff" />
+//         </TouchableOpacity>
+//       </View>
+
+//       <View style={styles.titleContainer}>
+//         <Text style={styles.headerTitle}>Reset Password</Text>
+//       </View>
+
+//       <ScrollView contentContainerStyle={styles.container}>
+//         <Text style={styles.label}>Old Password</Text>
+//         <View style={styles.inputWrapper}>
+//           <TextInput
+//             style={styles.input}
+//             value={oldPassword}
+//             onChangeText={setOldPassword}
+//             secureTextEntry={!showOld}
+//           />
+//           <TouchableOpacity onPress={() => setShowOld(!showOld)}>
+//             <Icon name={showOld ? 'eye-slash' : 'eye'} size={24} />
+//           </TouchableOpacity>
+//         </View>
+
+//         <Text style={styles.label}>New Password</Text>
+//         <View style={styles.inputWrapper}>
+//           <TextInput
+//             style={styles.input}
+//             value={newPassword}
+//             onChangeText={setNewPassword}
+//             secureTextEntry={!showNew}
+//           />
+//           <TouchableOpacity onPress={() => setShowNew(!showNew)}>
+//             <Icon name={showNew ? 'eye-slash' : 'eye'} size={24} />
+//           </TouchableOpacity>
+//         </View>
+
+//         <Text style={styles.label}>Confirm Password</Text>
+//         <View style={styles.inputWrapper}>
+//           <TextInput
+//             style={styles.input}
+//             value={confirmPassword}
+//             onChangeText={setConfirmPassword}
+//             secureTextEntry={!showConfirm}
+//           />
+//           <TouchableOpacity onPress={() => setShowConfirm(!showConfirm)}>
+//             <Icon name={showConfirm ? 'eye-slash' : 'eye'} size={24} />
+//           </TouchableOpacity>
+//         </View>
+
+//         <TouchableOpacity style={styles.button} onPress={handleReset}>
+//           <Text style={styles.buttonText}>UPDATE</Text>
+//         </TouchableOpacity>
+//       </ScrollView>
+//     </View>
+//   );
+// };
+
+// export default ResetPasswordPage;
 import React, { useState } from 'react';
 import {
   View,
@@ -5,44 +113,126 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
   ScrollView,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomAlert from '../../components/CustomAlert';
+
 const ResetPasswordPage = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const [showOld, setShowOld] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
-  const handleReset = () => {
+  // Custom Alert
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertProps, setAlertProps] = useState({
+    canRedirect: false,
+    message: '',
+  });
+
+  const showAlert = () => setAlertVisible(true);
+  // const hideAlert = () => setAlertVisible(false);
+  const hideAlert = () => {
+    setAlertVisible(false);
+    if (alertProps.canRedirect) {
+      navigation.navigate('Login');
+    }
+  };
+
+  const handleReset = async () => {
     if (!oldPassword || !newPassword || !confirmPassword) {
-      Alert.alert('Validation Error', 'Please fill all fields');
+      setAlertProps({
+        message: 'Please fill all fields',
+        canRedirect: false,
+      });
+      showAlert();
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      Alert.alert('Validation Error', 'New passwords do not match');
+      setAlertProps({
+        message: 'New passwords do not match',
+        canRedirect: false,
+      });
+      showAlert();
       return;
     }
 
-    Alert.alert('Success', 'Password updated successfully');
-    setOldPassword('');
-    setNewPassword('');
-    setConfirmPassword('');
+    try {
+      setLoading(true);
+      const token = await AsyncStorage.getItem('token');
+      const correl_id = await AsyncStorage.getItem('correl_id');
+
+      const payload = {
+        oldPassword,
+        newPassword,
+        confirmPassword,
+        correl_id,
+      };
+
+      const res = await fetch('https://recupe.in/api/changePassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (data.status === 'S' && data.result_code === 0) {
+        setAlertProps({
+          message: 'Password updated successfully',
+          canRedirect: true,
+        });
+        setOldPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+      } else {
+        setAlertProps({
+          message: data.message || 'Something went wrong',
+          canRedirect: false,
+        });
+      }
+
+      showAlert();
+    } catch (err) {
+      console.error(err);
+      setAlertProps({
+        message: 'Network error. Please try again later.',
+        canRedirect: false,
+      });
+      showAlert();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
       <StatusBar backgroundColor="#08979d" barStyle="light-content" />
+      <CustomAlert
+        isVisible={alertVisible}
+        onClose={hideAlert}
+        message={alertProps.message}
+        canRedirect={alertProps.canRedirect}
+        navigation={navigation}
+        redirectRoute="Login"
+      />
 
       <View style={styles.iconHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -98,7 +288,11 @@ const ResetPasswordPage = () => {
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleReset}>
-          <Text style={styles.buttonText}>UPDATE</Text>
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>UPDATE</Text>
+          )}
         </TouchableOpacity>
       </ScrollView>
     </View>

@@ -1,4 +1,19 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   TouchableOpacity,
+//   ScrollView,
+//   Image,
+//   StatusBar,
+// } from 'react-native';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { useNavigation } from '@react-navigation/native';
+// import Entypo from 'react-native-vector-icons/Entypo';
+// import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,28 +22,111 @@ import {
   ScrollView,
   Image,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { requestOptions, redirectLogin } from '../../../token';
+import CustomAlert from '../../components/CustomAlert';
 const ProfilePage = () => {
   const navigation = useNavigation();
   const [selectedImage, setSelectedImage] = useState(null);
+  const isFocused = useIsFocused();
+
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertProps, setAlertProps] = useState({
+    canRedirect: false,
+    message: '',
+  });
+
+  const showAlert = () => setAlertVisible(true);
+  const hideAlert = () => setAlertVisible(false);
+
+  useEffect(() => {
+    if (isFocused) fetchProfileData();
+  }, [isFocused]);
+
+  const fetchProfileData = async () => {
+    try {
+      setLoading(true);
+      const userInfo = JSON.parse(
+        (await AsyncStorage.getItem('userData')) || '{}',
+      );
+      const storedDcId = await AsyncStorage.getItem('dc_id');
+      const dc_id = storedDcId || userInfo.dc_id || '';
+      const correlId = await AsyncStorage.getItem('correl_id');
+      if (!dc_id) {
+        console.warn('Missing dc_id');
+        setUserData(null);
+        return;
+      }
+
+      const headers = await requestOptions();
+      const response = await fetch(
+        `https://recupe.in/api/getDCInfo/${correlId}`,
+        headers,
+      );
+      const json = await response.json();
+
+      console.log('Fetched Profile:', json);
+
+      if (json.status === 'S' && json.result_code === 0) {
+        setUserData(json.result_info);
+      } else if (json.status === 'F' && json.result_code === 505) {
+        redirectLogin(navigation);
+      } else {
+        setAlertProps({
+          canRedirect: false,
+          message: json.message || 'Something went wrong',
+        });
+        showAlert();
+        setUserData(null);
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      setAlertProps({
+        canRedirect: false,
+        message: 'Something went wrong',
+      });
+      showAlert();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#08979d" />
+      </View>
+    );
+  }
+
+  if (!userData) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.noData}>No profile data available</Text>
+      </View>
+    );
+  }
+  console.log('the user data is', userData);
   const user = {
-    name: 'Ajay',
-    centerName: 'Ajay diagnostic center',
-    email: 'Ajaymeru02@gmail.com',
-    mobile: '9999999999',
-    recupeId: 'REC_DC_05271256',
-    plan: 'Free Plan',
-    validityEndDate: '03-09-2025',
-    state: '--',
-    city: 'Hyd',
-    pincode: '--',
-    address: '--',
+    name: userData?.pic_name,
+    centerName: userData?.center_name,
+    email: userData?.email || '--',
+    mobile: userData?.mobile || '--',
+    recupeId: userData?.recupe_id || '--',
+    plan: userData?.plan || '--',
+    validityEndDate: userData?.validity_end_date,
+    state: userData?.state || '--',
+    city: userData?.city || '--',
+    pincode: userData?.pincode || '--',
+    address: userData?.address || '--',
     imageUrl: '../../assets/images/home-vector.60eaedb1083724ec6f59.png',
   };
 
@@ -116,6 +214,285 @@ const InfoItem = ({ label, value }) => (
 );
 
 export default ProfilePage;
+
+// const ProfilePage = () => {
+//   const navigation = useNavigation();
+//   const isFocused = useIsFocused();
+
+//   const [userData, setUserData] = useState(null);
+//   const [loading, setLoading] = useState(false);
+//   const [alertVisible, setAlertVisible] = useState(false);
+//   const [alertProps, setAlertProps] = useState({
+//     canRedirect: false,
+//     message: '',
+//   });
+
+//   const showAlert = () => setAlertVisible(true);
+//   const hideAlert = () => setAlertVisible(false);
+
+//   useEffect(() => {
+//     if (isFocused) fetchProfileData();
+//   }, [isFocused]);
+
+//   const fetchProfileData = async () => {
+//     try {
+//       setLoading(true);
+//       const userInfo = JSON.parse(
+//         (await AsyncStorage.getItem('userData')) || '{}',
+//       );
+//       const storedDcId = await AsyncStorage.getItem('dc_id');
+//       const dc_id = storedDcId || userInfo.dc_id || '';
+//       const correlId = await AsyncStorage.getItem('correl_id');
+//       if (!dc_id) {
+//         console.warn('Missing dc_id');
+//         setUserData(null);
+//         return;
+//       }
+
+//       const headers = await requestOptions();
+//       const response = await fetch(
+//         `https://recupe.in/api/getDCInfo/${correlId}`,
+//         headers,
+//       );
+//       const json = await response.json();
+
+//       console.log('Fetched Profile:', json);
+
+//       if (json.status === 'S' && json.result_code === 0) {
+//         setUserData(json.result_info);
+//       } else if (json.status === 'F' && json.result_code === 505) {
+//         redirectLogin(navigation);
+//       } else {
+//         setAlertProps({
+//           canRedirect: false,
+//           message: json.message || 'Something went wrong',
+//         });
+//         showAlert();
+//         setUserData(null);
+//       }
+//     } catch (error) {
+//       console.error('Error fetching profile:', error);
+//       setAlertProps({
+//         canRedirect: false,
+//         message: 'Something went wrong',
+//       });
+//       showAlert();
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   if (loading) {
+//     return (
+//       <View style={styles.loadingContainer}>
+//         <ActivityIndicator size="large" color="#08979d" />
+//       </View>
+//     );
+//   }
+
+//   if (!userData) {
+//     return (
+//       <View style={styles.container}>
+//         <Text style={styles.noData}>No profile data available</Text>
+//       </View>
+//     );
+//   }
+
+//   return (
+//     <View style={styles.container}>
+//       <StatusBar backgroundColor="#08979d" barStyle="light-content" />
+//       <CustomAlert
+//         isVisible={alertVisible}
+//         onClose={hideAlert}
+//         message={alertProps.message}
+//         canRedirect={alertProps.canRedirect}
+//         navigation={navigation}
+//         redirectRoute="Login"
+//       />
+
+//       {/* Header */}
+//       <View style={styles.headerContainer}>
+//         <TouchableOpacity onPress={() => navigation.goBack()}>
+//           <FontAwesome6 name="arrow-left" size={28} color="#fff" />
+//         </TouchableOpacity>
+//         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+//           <Entypo name="home" size={30} color="#fff" />
+//         </TouchableOpacity>
+//       </View>
+//       <Text style={styles.header}>Profile</Text>
+
+//       {/* Profile Info */}
+//       <ScrollView contentContainerStyle={styles.scrollContent}>
+//         <View style={styles.card}>
+//           <Text style={styles.label}>Name</Text>
+//           <Text style={styles.value}>{userData.dc_name}</Text>
+
+//           <Text style={styles.label}>Email</Text>
+//           <Text style={styles.value}>{userData.email_id}</Text>
+
+//           <Text style={styles.label}>Mobile</Text>
+//           <Text style={styles.value}>{userData.mobile_no}</Text>
+
+//           <Text style={styles.label}>Address</Text>
+//           <Text style={styles.value}>{userData.dc_address}</Text>
+
+//           <Text style={styles.label}>State</Text>
+//           <Text style={styles.value}>{userData.state_name}</Text>
+
+//           <Text style={styles.label}>District</Text>
+//           <Text style={styles.value}>{userData.district_name}</Text>
+//         </View>
+//       </ScrollView>
+//     </View>
+//   );
+// };
+// export default ProfilePage;
+// import React, { useEffect, useState } from 'react';
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   TouchableOpacity,
+//   ScrollView,
+//   Image,
+//   StatusBar,
+//   ActivityIndicator,
+// } from 'react-native';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { useNavigation } from '@react-navigation/native';
+// import Entypo from 'react-native-vector-icons/Entypo';
+// import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+// import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// const ProfilePage = () => {
+//   const navigation = useNavigation();
+//   const [user, setUser] = useState(null);
+//   const [loading, setLoading] = useState(true);
+
+//   const fetchProfile = async () => {
+//     try {
+//       const token = await AsyncStorage.getItem('access_token');
+//       const correlId = await AsyncStorage.getItem('correl_id');
+
+//       if (!token || !correlId) throw new Error('Missing credentials');
+
+//       const res = await fetch(`https://recupe.in/api/getDCInfo/${correlId}`, {
+//         method: 'GET',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'x-access-token': token,
+//         },
+//       });
+
+//       const json = await res.json();
+
+//       if (json.status === 'S' && json.result_code === 0) {
+//         setUser(json.result_info);
+//       } else {
+//         console.error('Failed to load profile:', json.message);
+//       }
+//     } catch (err) {
+//       console.error('Error fetching profile:', err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchProfile();
+//   }, []);
+
+//   if (loading) {
+//     return (
+//       <View style={styles.loaderContainer}>
+//         <ActivityIndicator size="large" color="#08979d" />
+//       </View>
+//     );
+//   }
+
+//   if (!user) {
+//     return (
+//       <View style={styles.loaderContainer}>
+//         <Text>Unable to load profile.</Text>
+//       </View>
+//     );
+//   }
+
+//   return (
+//     <View style={styles.container}>
+//       <StatusBar backgroundColor="#08979d" barStyle="light-content" />
+//       <View style={styles.headerContainer}>
+//         <TouchableOpacity onPress={() => navigation.goBack()}>
+//           <FontAwesome6 name="arrow-left" size={28} color="#fff" />
+//         </TouchableOpacity>
+//         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+//           <Entypo name="home" size={30} color="#fff" />
+//         </TouchableOpacity>
+//       </View>
+
+//       <View style={styles.header}>
+//         <Text style={styles.headerTitle}>Profile</Text>
+//       </View>
+
+//       <ScrollView contentContainerStyle={styles.scrollContent}>
+//         <View style={styles.card}>
+//           <View style={styles.profileRow}>
+//             {user.logo ? (
+//               <Image
+//                 source={{ uri: user.logo }}
+//                 style={styles.profileImage}
+//                 resizeMode="contain"
+//               />
+//             ) : (
+//               <MaterialIcon name="image" size={90} color="#08979d" />
+//             )}
+//             <View style={{ flex: 1, marginLeft: 20 }}>
+//               <Text style={styles.name}>{user.pic_name}</Text>
+//               <Text style={styles.subText}>{user.center_name}</Text>
+//               <Text style={styles.subText}>{user.email}</Text>
+//             </View>
+//             <TouchableOpacity
+//               style={styles.editButton}
+//               onPress={() => navigation.navigate('EditProfilePage')}
+//             >
+//               <View style={styles.editstyles}>
+//                 <Text style={styles.editText}>EDIT</Text>
+//               </View>
+//               <MaterialCommunityIcons name="pencil" size={18} color="#000" />
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+
+//         <View style={[styles.card, styles.cardTwo]}>
+//           <Text style={styles.sectionTitle}>Personal Info</Text>
+//           <InfoItem label="Recupe ID" value={user.recupe_id} />
+//           <InfoItem label="Center Name" value={user.center_name} />
+//           <InfoItem label="PIC Name" value={user.pic_name} />
+//           <InfoItem label="Email" value={user.email} />
+//           <InfoItem label="Mobile" value={user.mobile} />
+//           <InfoItem label="Plan" value={user.plan} />
+//           <InfoItem label="Validity End Date" value={user.validity_end_date} />
+//         </View>
+
+//         <View style={[styles.card, styles.cardTwo]}>
+//           <Text style={styles.sectionTitle}>Additional Info</Text>
+//           <InfoItem label="State" value={user.state || '--'} />
+//           <InfoItem label="City" value={user.city || '--'} />
+//           <InfoItem label="Pincode" value={user.pincode || '--'} />
+//           <InfoItem label="Address" value={user.address || '--'} />
+//         </View>
+//       </ScrollView>
+//     </View>
+//   );
+// };
+
+// const InfoItem = ({ label, value }) => (
+//   <View style={styles.infoRow}>
+//     <Text style={styles.label}>{label}</Text>
+//     <Text style={styles.value}>{value}</Text>
+//   </View>
+// );
 
 const styles = StyleSheet.create({
   container: {
